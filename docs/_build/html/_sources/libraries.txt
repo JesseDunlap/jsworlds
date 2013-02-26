@@ -1,0 +1,15 @@
+Library Helper
+**************
+
+P allows you to easily load Libraries from the ``lib`` folder.
+
+Loading a Library
+=================
+
+.. code-block:: javascript
+
+   var library = P.lib("path/to/library");
+
+.. note::
+
+   ``P.lib`` will initialize the file you specified, and return a new instance of it.

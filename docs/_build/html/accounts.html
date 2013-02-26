@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Accounts &mdash; P 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="P 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Session Data" href="session.html" />
+    <link rel="prev" title="Templating Engines" href="templating_engines.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="session.html" title="Session Data"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="templating_engines.html" title="Templating Engines"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">P 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Accounts</a><ul>
+<li><a class="reference internal" href="#initializing-the-accounts-module">Initializing the Accounts Module</a></li>
+<li><a class="reference internal" href="#checking-if-the-user-is-logged-in">Checking If The User is Logged In</a></li>
+<li><a class="reference internal" href="#accessing-the-logged-in-user">Accessing the Logged In User</a></li>
+<li><a class="reference internal" href="#registering-a-new-user">Registering a New User</a></li>
+<li><a class="reference internal" href="#authenticating-a-user">Authenticating a User</a></li>
+<li><a class="reference internal" href="#logging-out">Logging Out</a></li>
+<li><a class="reference internal" href="#updating-user-information">Updating User Information</a></li>
+<li><a class="reference internal" href="#gravatars">Gravatars</a><ul>
+<li><a class="reference internal" href="#p-accounts-grav-email">P.accounts.grav(email)</a></li>
+<li><a class="reference internal" href="#p-accounts-getgravatar">P.accounts.getGravatar()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="templating_engines.html"
+                        title="previous chapter">Templating Engines</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="session.html"
+                        title="next chapter">Session Data</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/accounts.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="accounts">
+<h1>Accounts<a class="headerlink" href="#accounts" title="Permalink to this headline">¶</a></h1>
+<p>The Accounts Module allows your app to have user accounts set up out of the box,
+complete with name, email, password, avatars, and any additional data you desire.</p>
+<p>The Accounts module uses MongoDb, and references the <tt class="docutils literal"><span class="pre">mongo</span></tt> config in the
+<tt class="docutils literal"><span class="pre">config/environment.js</span></tt> file.</p>
+<div class="section" id="initializing-the-accounts-module">
+<h2>Initializing the Accounts Module<a class="headerlink" href="#initializing-the-accounts-module" title="Permalink to this headline">¶</a></h2>
+<p>Before you can use the Accounts module, you will need to add the following code to your
+<strong>App Controller&#8217;s</strong> <tt class="docutils literal"><span class="pre">onLoad</span></tt> action:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">P</span><span class="p">.</span><span class="nx">depends</span><span class="p">([</span><span class="s2">&quot;Accounts&quot;</span><span class="p">]);</span>
+
+<span class="nx">P</span><span class="p">.</span><span class="nx">accounts</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">callback</span><span class="p">();</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">init</span></tt> method will:</p>
+<ul class="simple">
+<li>Connect to the P account database</li>
+<li>Re-establish a session if one exists</li>
+<li>Notify you of any errors that occur</li>
+</ul>
+</div>
+<div class="section" id="checking-if-the-user-is-logged-in">
+<h2>Checking If The User is Logged In<a class="headerlink" href="#checking-if-the-user-is-logged-in" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="nx">P</span><span class="p">.</span><span class="nx">accounts</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">()</span> <span class="o">==</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// user authenticated</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="accessing-the-logged-in-user">
+<h2>Accessing the Logged In User<a class="headerlink" href="#accessing-the-logged-in-user" title="Permalink to this headline">¶</a></h2>
+<p>If you have an active login session, you can access the account information using
+the <tt class="docutils literal"><span class="pre">P.account</span></tt> object. A sample Account Object is shown below:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s2">&quot;firstName&quot;</span><span class="o">:</span>      <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lastName&quot;</span><span class="o">:</span>       <span class="s2">&quot;Doe&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;password&quot;</span><span class="o">:</span>       <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;username&quot;</span><span class="o">:</span>       <span class="s2">&quot;john.doe&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;email&quot;</span><span class="o">:</span>          <span class="s2">&quot;john@gmail.com&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;additionalData&quot;</span><span class="o">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="registering-a-new-user">
+<h2>Registering a New User<a class="headerlink" href="#registering-a-new-user" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">P</span><span class="p">.</span><span class="nx">account</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">=</span> <span class="s2">&quot;John&quot;</span><span class="p">;</span>
+<span class="nx">P</span><span class="p">.</span><span class="nx">account</span><span class="p">.</span><span class="nx">lastName</span>  <span class="o">=</span> <span class="s2">&quot;Doe&quot;</span><span class="p">;</span>
+<span class="nx">P</span><span class="p">.</span><span class="nx">account</span><span class="p">.</span><span class="nx">password</span>  <span class="o">=</span> <span class="s2">&quot;1234&quot;</span><span class="p">;</span>
+<span class="nx">P</span><span class="p">.</span><span class="nx">account</span><span class="p">.</span><span class="nx">email</span>     <span class="o">=</span> <span class="s2">&quot;john@gmail.com&quot;</span><span class="p">;</span>
+<span class="nx">P</span><span class="p">.</span><span class="nx">account</span><span class="p">.</span><span class="nx">username</span>  <span class="o">=</span> <span class="s2">&quot;john.doe&quot;</span><span class="p">;</span>
+
+<span class="nx">P</span><span class="p">.</span><span class="nx">accounts</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// completed registration</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="authenticating-a-user">
+<h2>Authenticating a User<a class="headerlink" href="#authenticating-a-user" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">P</span><span class="p">.</span><span class="nx">accounts</span><span class="p">.</span><span class="nx">login</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">loggedIn</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">loggedIn</span> <span class="o">==</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// authenticated</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The user can enter either their <strong>username</strong> or <strong>email address</strong>. Both will work.</p>
+</div>
+</div>
+<div class="section" id="logging-out">
+<h2>Logging Out<a class="headerlink" href="#logging-out" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">P</span><span class="p">.</span><span class="nx">accounts</span><span class="p">.</span><span class="nx">logout</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="updating-user-information">
+<h2>Updating User Information<a class="headerlink" href="#updating-user-information" title="Permalink to this headline">¶</a></h2>
+<p>After successful authentication, you can change the <tt class="docutils literal"><span class="pre">P.account</span></tt> object to match
+the new information, then call <tt class="docutils literal"><span class="pre">P.accounts.update()</span></tt></p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">P</span><span class="p">.</span><span class="nx">account</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">=</span> <span class="s2">&quot;Johnny&quot;</span><span class="p">;</span>
+
+<span class="nx">P</span><span class="p">.</span><span class="nx">accounts</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// completed update</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">As of now, changing the username, password, or email of the user does not invalidate
+the session. You will have to do this on your own.</p>
+</div>
+</div>
+<div class="section" id="gravatars">
+<h2>Gravatars<a class="headerlink" href="#gravatars" title="Permalink to this headline">¶</a></h2>
+<p>The Accounts Module uses Gravatars for avatar storage. You can choose to use your own
+avatar storage if you would like. A couple of functions are provided for retrieving
+Gravatar information...</p>
+<div class="section" id="p-accounts-grav-email">
+<h3>P.accounts.grav(email)<a class="headerlink" href="#p-accounts-grav-email" title="Permalink to this headline">¶</a></h3>
+<p>This shorthand function returns a Gravatar URL for the specified <tt class="docutils literal"><span class="pre">email</span></tt>.</p>
+</div>
+<div class="section" id="p-accounts-getgravatar">
+<h3>P.accounts.getGravatar()<a class="headerlink" href="#p-accounts-getgravatar" title="Permalink to this headline">¶</a></h3>
+<p>Gets the current authenticated user&#8217;s Gravatar URL.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="session.html" title="Session Data"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="templating_engines.html" title="Templating Engines"
+             >previous</a> |</li>
+        <li><a href="index.html">P 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Jesse Dunlap.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.Theme by <a href="http://github.com/vkvn">vkvn</a>
+    </div>
+  </body>
+</html>

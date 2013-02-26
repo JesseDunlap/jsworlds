@@ -1,0 +1,165 @@
+<% include layout/header %>
+<% include layout/nav %>
+
+<div class="row">
+	<div class="three columns">
+		<ul class="nav-bar vertical">
+			<li class="active"><a href="p-operator.html">1. The P Operator</a></li>
+			<li><a href="p-mvc.html">2. The P MVC</a></li>
+			<li><a href="controllers.html">3. Controllers</a></li>
+			<li><a href="views.html">4. Views</a></li>
+			<li><a href="#">5. Models</a></li>
+		</ul>
+	</div>
+
+	<div class="nine columns">
+		<div class="row">
+			<div class="panel">
+				<div class="row">
+					<div class="twelve columns">
+						<h1>The P Operator</h1>
+						<p>Central object for all P framework operations</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<p>The <code>P</code> operator is P's version of the jQuery <code>$</code>. When P
+				first runs, it searches the <code>modules</code> folder for JavaScript files which
+				extend the <code>P</code> object. The <code>P</code> object also contains a few
+				core functions which are required almost everywhere in a P app.
+			</p>
+			
+			
+			<h1 class="subheader">Variables</h1>
+			
+			<div>
+				<h1 class="subheader"><small>P.config</small></h1>
+				<p>The global configuration object, which can be modified with the <code>P.configure</code> function.</p>
+			</div>
+			
+			<div>
+				<h1 class="subheader"><small>P.socket</small></h1>
+				<p>The Socket.IO instance corresponding to the current user.</p>
+			</div>
+			
+			<hr />
+			
+			<h1 class="subheader">Methods</h1>
+			
+			<div>
+				<h1 class="subheader"><small>P.depends</small></h1>
+				<p>Loads any dependency modules that have not already been loaded.</p>
+				
+				<div class="panel">
+					<p>
+						<span class="label">PARAMETERS</span>
+					</p>
+				
+					<div>
+						<code>dependencies</code><br />
+						<p>A JavaScript list of modules that are needed.</p>
+					</div>
+				</div>
+			</div>
+			
+			<hr />
+			
+			<div>
+				<h1 class="subheader"><small>P.on</small></h1>
+				<p>Listens for an event or a Socket.IO emitter and sends a callback when the event or emitter is triggered.</p>
+				
+				<div class="panel">
+					<p>
+						<span class="label">PARAMETERS</span>
+					</p>
+				
+					<div>
+						<code>listener</code><br />
+						<p>The name of the event or emitter you want to listen for.</p>
+					</div>
+					
+					<div>
+						<code>callback</code><br />
+						<p>The callback function, which will be called when the event or emitter is triggered.</p>
+					</div>
+				</div>
+			</div>
+			
+			<hr />
+			
+			<div>
+				<h1 class="subheader"><small>P.emit</small></h1>
+				<p>Triggers a P event and a Socket.IO emission.</p>
+				
+				<div class="panel">
+					<p>
+						<span class="label">PARAMETERS</span>
+					</p>
+				
+					<div>
+						<code>listener</code><br />
+						<p>The name of the emitter you want to send.</p>
+					</div>
+					
+					<div>
+						<code>[data]</code><br />
+						<p>Optional data to be sent with the event.</p>
+					</div>
+					
+					<div>
+						<code>[doNotSendOverSocket]</code><br />
+						<p>Set to <code>true</code> if you do not want this event to be sent over Socket.IO.</p>
+					</div>
+				</div>
+			</div>
+			
+			<hr />
+			
+			<div>
+				<h1 class="subheader"><small>P.extend</small></h1>
+				<p>Merges two JavaScript objects, much like the <code>jQuery.extend</code> function.</p>
+				
+				<div class="panel">
+					<p>
+						<span class="label">PARAMETERS</span>
+					</p>
+				
+					<div>
+						<code>obj1</code><br />
+						<p>The original object.</p>
+					</div>
+					
+					<div>
+						<code>obj2</code><br />
+						<p>The object to be merged with the original object.</p>
+					</div>
+				</div>
+			</div>
+			
+			<hr />
+			
+			<div>
+				<h1 class="subheader"><small>P.configure</small></h1>
+				<p>Merges a configuration object with the global configuration object.</p>
+				
+				<div class="panel">
+					<p>
+						<span class="label">PARAMETERS</span>
+					</p>
+				
+					<div>
+						<code>new_config</code><br />
+						<p>The new configuration data to merge.</p>
+					</div>
+				</div>
+				
+				<p>
+					<span class="label">NOTE</span> To use configuration data, simply access the
+					data via the <code>P.config</code> variable.
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

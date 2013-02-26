@@ -1,0 +1,9 @@
+= generate COMMAND HELP ===============================
+
+    generate model <model_name> <model_type> [<additional, args>]
+
+    model_name          The name you wish to use for your model.
+    model_type          Type type of generation you want to happen.
+                        AVAILABLE TYPES:
+                            * "mongojs"
+                              ARGUMENTS: <collection_name>

@@ -1,0 +1,4 @@
+= COMMANDS ============================================
+
+    generate [view/controller/model] <name> [additional_options]
+    Generates a new view, controller, or model. For more information type "help generate"

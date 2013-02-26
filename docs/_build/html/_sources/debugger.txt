@@ -1,0 +1,42 @@
+.. sidebar:: Module Information
+
+   :Implemented In:
+      Debugger.js
+   
+   :Dependencies:
+      Core
+      
+   :Author:
+      Jesse Dunlap
+
+
+The P Debugger System
+*********************
+
+P offers an extended version of ``console.log``, which allows you to send different
+kinds of messages. In the near future, you will be able to disable any or all of the
+P logger messages.
+
+Logging a Notice
+================
+
+.. code-block:: javascript
+
+   P.log.notice("Hello World!");
+
+
+Logging a Warning
+================
+
+.. code-block:: javascript
+
+   P.log.warning("Warning World!");
+
+
+
+Logging an Error
+================
+
+.. code-block:: javascript
+
+   P.log.error("Error World!");

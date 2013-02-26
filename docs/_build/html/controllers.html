@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Controllers &mdash; P 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="P 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Elements" href="elements.html" />
+    <link rel="prev" title="Views" href="views.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="elements.html" title="Elements"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="views.html" title="Views"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">P 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Controllers</a><ul>
+<li><a class="reference internal" href="#generating-a-controller">Generating a Controller</a></li>
+<li><a class="reference internal" href="#structure-of-a-controller">Structure of a Controller</a><ul>
+<li><a class="reference internal" href="#special-controller-actions">Special Controller Actions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#triggering-a-controller-action">Triggering a Controller Action</a><ul>
+<li><a class="reference internal" href="#in-a-controller">In a Controller</a></li>
+<li><a class="reference internal" href="#in-a-view">In a View</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-index-controller">The Index Controller</a></li>
+<li><a class="reference internal" href="#the-app-controller">The App Controller</a><ul>
+<li><a class="reference internal" href="#onload-callback">onLoad(callback)</a></li>
+<li><a class="reference internal" href="#onexit">onExit()</a></li>
+<li><a class="reference internal" href="#beforefilter">beforeFilter()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="views.html"
+                        title="previous chapter">Views</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="elements.html"
+                        title="next chapter">Elements</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/controllers.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="sidebar">
+<p class="first sidebar-title">Module Information</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Implemented In:</th><td class="field-body">Controllers.js</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Dependencies:</th><td class="field-body">Core</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Jesse Dunlap</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="controllers">
+<h1>Controllers<a class="headerlink" href="#controllers" title="Permalink to this headline">¶</a></h1>
+<p><strong>Controllers</strong> are a major part of the MVC architecture. They serve as the &#8220;glue&#8221; between
+Models and Views. Controllers contain methods, or functions, called <strong>actions</strong>, which
+usually correspond to a single task the controller can perform.</p>
+<div class="section" id="generating-a-controller">
+<h2>Generating a Controller<a class="headerlink" href="#generating-a-controller" title="Permalink to this headline">¶</a></h2>
+<p>Using the P command prompt, you can quickly generate a new controller, complete with
+some basic bootstrap code. To generate a controller, run the following command in the
+prompt:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">generate</span> <span class="nx">controller</span> <span class="o">&lt;</span><span class="nx">controller</span> <span class="nx">name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Controllers are typically named in a lowercase, plural form of whatever data they will
+be interacting with the most. For example, a controller that handles account registration,
+login, and modification, might be called <tt class="docutils literal"><span class="pre">accounts</span></tt>.</p>
+</div>
+<div class="section" id="structure-of-a-controller">
+<h2>Structure of a Controller<a class="headerlink" href="#structure-of-a-controller" title="Permalink to this headline">¶</a></h2>
+<p>Controllers are, simply put, <strong>Node modules</strong>. This allows for potential portability in
+the future, perhaps allowing you to simply take your code and put it into another Node
+application.</p>
+<p>Inside of the Controller, there can be variables or functions. Functions typically
+correspond to actions, which may be invoked by Views or other Controllers.</p>
+<p>A sample controller is shown below:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">P</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Index Action</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>As you can see, this controller contains a single action: <tt class="docutils literal"><span class="pre">index</span></tt>. Most controllers
+contain an index action, which serves as the &#8220;landing page&#8221; for the controller.</p>
+<div class="section" id="special-controller-actions">
+<h3>Special Controller Actions<a class="headerlink" href="#special-controller-actions" title="Permalink to this headline">¶</a></h3>
+<p>Any controller can choose to implement a set of <strong>special actions</strong> which allow it to perform
+actions in certain special-case scenarios.</p>
+<p><strong>beforeFilter</strong></p>
+<p>The <tt class="docutils literal"><span class="pre">beforeFilter</span></tt> action will be triggered before the controller is loaded.
+(e.g. when the app calls <tt class="docutils literal"><span class="pre">P.controller(&quot;your_controller_name&quot;)</span></tt>)</p>
+<p><strong>index</strong></p>
+<p>It is usually a good idea to implement the <tt class="docutils literal"><span class="pre">index</span></tt> action, especially in the
+<strong>P Websites</strong> fork of P. Future versions of P may automatically route to the
+<tt class="docutils literal"><span class="pre">index</span></tt> action if another action is not specified.</p>
+</div>
+</div>
+<div class="section" id="triggering-a-controller-action">
+<h2>Triggering a Controller Action<a class="headerlink" href="#triggering-a-controller-action" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="in-a-controller">
+<h3>In a Controller<a class="headerlink" href="#in-a-controller" title="Permalink to this headline">¶</a></h3>
+<p>Triggering an action in a controller is simple, just use the <tt class="docutils literal"><span class="pre">P.controller</span></tt> function as shown below:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">P</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s2">&quot;controller_name&quot;</span><span class="p">).</span><span class="nx">action</span><span class="p">([</span><span class="nx">parameters</span><span class="p">]);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">P automatically caches controllers. If a controller has been previously loaded,
+it will be returned by <tt class="docutils literal"><span class="pre">P.controller</span></tt>. To disable this, specify a second parameter:
+<tt class="docutils literal"><span class="pre">{</span> <span class="pre">cache:</span> <span class="pre">false</span> <span class="pre">}</span></tt> in the <tt class="docutils literal"><span class="pre">P.controller</span></tt> function.</p>
+</div>
+</div>
+<div class="section" id="in-a-view">
+<h3>In a View<a class="headerlink" href="#in-a-view" title="Permalink to this headline">¶</a></h3>
+<p><strong>Manual JavaScript Triggering</strong></p>
+<p>The usual way of triggering a controller action is through client-side Javascript, using
+the <strong>P.controller</strong> function. In client-side JavaScript, the <tt class="docutils literal"><span class="pre">P.controller</span></tt> function
+acts a bit differently than on the server.</p>
+<p>A usage example is shown below:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">P</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s2">&quot;controller_name&quot;</span><span class="p">).</span><span class="nx">action</span><span class="p">([</span><span class="nx">parameter</span><span class="p">],</span> <span class="p">[</span><span class="nx">callback</span><span class="p">]);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the controller returns something, the return value will be passed
+as a parameter to the specified <tt class="docutils literal"><span class="pre">callback</span></tt> function.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">You can only send one parameter to a controller action with client-side JavaScript.
+However, this can be any kind of <strong>serializable</strong> data structure, including an
+<strong>Object</strong>.</p>
+</div>
+<hr class="docutils" />
+<p><strong>Quick Links</strong></p>
+<p>You can also trigger a parameter-less controller action by adding the <tt class="docutils literal"><span class="pre">p:link</span></tt> attribute
+to an <tt class="docutils literal"><span class="pre">anchor</span></tt> tag in your view. An example is shown below:</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span> <span class="na">p:link=</span><span class="s">&quot;controller.action&quot;</span><span class="nt">&gt;</span>Click Me<span class="nt">&lt;/a&gt;</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><strong>Forms</strong></p>
+<p>P allows you to quickly link a form, including its serialized data to a controller action
+using the <tt class="docutils literal"><span class="pre">p:action</span></tt> tag. An example is shown below:</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;form</span> <span class="na">p:action=</span><span class="s">&quot;controller.action&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;p&gt;</span>Your Name:<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Submit&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</pre></div>
+</div>
+<p>P will automatically serialize the form&#8217;s data and include it as the parameter for the
+controller action. The form above would be serialized into this JSON data:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;The User&#39;s Entered Value&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">P can also serialize file input elements. For more information, see the Forms tutorial.</p>
+</div>
+<hr class="docutils" />
+<p><strong>Callbacks</strong></p>
+<div class="admonition-required-p-version admonition">
+<p class="first admonition-title">Required P Version</p>
+<p class="last"><strong>&gt;= 0.1.5</strong></p>
+</div>
+<p>Controller actions are able, through their <tt class="docutils literal"><span class="pre">return</span></tt> statement, to send data back to the calling
+view as a callback function.</p>
+<p><strong>Controller Action:</strong></p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">this</span><span class="p">.</span><span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>View:</strong></p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">P</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s2">&quot;some_controller&quot;</span><span class="p">,</span> <span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span> <span class="c1">// 7</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-index-controller">
+<h2>The Index Controller<a class="headerlink" href="#the-index-controller" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Index Controller</strong> (<tt class="docutils literal"><span class="pre">index.js</span></tt>) is a required controller, similar to the <strong>App Controller</strong>.</p>
+<p>P assumes the existence of the index controller, as well as the <tt class="docutils literal"><span class="pre">index</span></tt> action. When a user
+connects to the P server, a new instance of the P object is created, and the index controller&#8217;s
+index action is triggered.</p>
+</div>
+<div class="section" id="the-app-controller">
+<h2>The App Controller<a class="headerlink" href="#the-app-controller" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>App Controller</strong> provides a more global-oriented area to handle events for your
+application. The app controller is required for proper operation of your application,
+as well as implementation of the following methods:</p>
+<div class="section" id="onload-callback">
+<h3>onLoad(callback)<a class="headerlink" href="#onload-callback" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">onLoad</span></tt> is called when the user first connects to the P server. This is where you
+should do any kind of filesystem setup, session restoring, or database connections.
+Once you&#8217;ve finished doing everything you need to do, you will need to trigger the
+<tt class="docutils literal"><span class="pre">callback()</span></tt> method.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Failure to trigger the <tt class="docutils literal"><span class="pre">callback()</span></tt> function will stop your app from loading.</p>
+</div>
+</div>
+<div class="section" id="onexit">
+<h3>onExit()<a class="headerlink" href="#onexit" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">onExit</span></tt> is called when the user disconnects from your app. It gives you an opportunity
+to do any background processing necessary to save the user&#8217;s state, and clean up anything
+you need to.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When the user disconnects, or closes the web page, nothing happens on the server side,
+so you can use almost any information without fear of it being deleted. However, this
+means you will need to be careful about memory usage and clean-up.</p>
+</div>
+</div>
+<div class="section" id="beforefilter">
+<h3>beforeFilter()<a class="headerlink" href="#beforefilter" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">beforeFilter</span></tt> functions like the beforeFilter action on any controller, except the
+App controller&#8217;s beforeFilter action gets triggered before <em>every</em> controller load.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="elements.html" title="Elements"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="views.html" title="Views"
+             >previous</a> |</li>
+        <li><a href="index.html">P 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Jesse Dunlap.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.Theme by <a href="http://github.com/vkvn">vkvn</a>
+    </div>
+  </body>
+</html>

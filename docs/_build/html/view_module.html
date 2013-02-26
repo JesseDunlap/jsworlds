@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>View Module &mdash; P 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="P 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Email Module" href="email_module.html" />
+    <link rel="prev" title="String Module" href="string_module.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="email_module.html" title="Email Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="string_module.html" title="String Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">P 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">View Module</a><ul>
+<li><a class="reference internal" href="#about-the-view-module">About the View Module</a></li>
+<li><a class="reference internal" href="#method-definitions">Method Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="string_module.html"
+                        title="previous chapter">String Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="email_module.html"
+                        title="next chapter">Email Module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/view_module.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="sidebar">
+<p class="first sidebar-title">Module Information</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Implemented In:</th><td class="field-body"><tt class="docutils literal"><span class="pre">modules/View.js</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Depends On:</th><td class="field-body">Core, Element</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="view-module">
+<h1>View Module<a class="headerlink" href="#view-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about-the-view-module">
+<h2>About the View Module<a class="headerlink" href="#about-the-view-module" title="Permalink to this headline">¶</a></h2>
+<p>The View module serves as the primary way to create interfaces, and
+implements the View portion of the P MVC architecture.</p>
+<p>Views are localized, and stored in the <tt class="docutils literal"><span class="pre">app/views</span></tt> directory.</p>
+<p>For more information about views, see the <strong>Views</strong> guide.</p>
+</div>
+<div class="section" id="method-definitions">
+<h2>Method Definitions<a class="headerlink" href="#method-definitions" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>P.view(name, [options])</dt>
+<dd><p class="first">Appends a view to the <tt class="docutils literal"><span class="pre">body</span></tt> of the page.</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">string</span></tt> name - The view file you wish to load. Note: extension not necessary</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">object</span></tt> [options] - An optional key-value pair which specifies data able to be used by the view.</p>
+<p class="last"><strong>&#64;return</strong>                          <tt class="docutils literal"><span class="pre">Element</span></tt> An element which references the container <tt class="docutils literal"><span class="pre">div</span></tt> which contains your view.</p>
+</dd>
+</dl>
+<hr class="docutils" />
+<dl class="docutils">
+<dt>P.snippet(name, [options])</dt>
+<dd><p class="first">Passes the view file through the templating engine, but does not add it to the page.</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">string</span></tt> name - The view file you wish to parse.</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">object</span></tt> [options] - An optional key-value pair which will be available to the view.</p>
+<p class="last"><strong>&#64;return</strong>                          <tt class="docutils literal"><span class="pre">string</span></tt> A string representation of the view&#8217;s parsed code.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is possible to use the <tt class="docutils literal"><span class="pre">P.snippet</span></tt> function in views, and this is a good practice for outsourcing interface elements to separate files. You can also use <tt class="docutils literal"><span class="pre">P.snippet</span></tt> in a controller, for outsourcing re-usable elements of the interface when they need to be changed or updated.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="email_module.html" title="Email Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="string_module.html" title="String Module"
+             >previous</a> |</li>
+        <li><a href="index.html">P 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Jesse Dunlap.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.Theme by <a href="http://github.com/vkvn">vkvn</a>
+    </div>
+  </body>
+</html>
