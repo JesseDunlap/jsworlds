@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Email Module &mdash; P 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="P 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Extending P With Modules" href="p_modules.html" />
+    <link rel="prev" title="View Module" href="view_module.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="p_modules.html" title="Extending P With Modules"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="view_module.html" title="View Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">P 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Email Module</a><ul>
+<li><a class="reference internal" href="#about-the-email-module">About the Email Module</a></li>
+<li><a class="reference internal" href="#changing-the-sender">Changing the Sender</a></li>
+<li><a class="reference internal" href="#future-plans">Future Plans</a></li>
+<li><a class="reference internal" href="#method-definitions">Method Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="view_module.html"
+                        title="previous chapter">View Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="p_modules.html"
+                        title="next chapter">Extending P With Modules</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/email_module.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="sidebar">
+<p class="first sidebar-title">Module Information</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Implemented In:</th><td class="field-body"><tt class="docutils literal"><span class="pre">modules/Email.js</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Depends On:</th><td class="field-body">Core, <cite>sendmail</cite></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="email-module">
+<h1>Email Module<a class="headerlink" href="#email-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about-the-email-module">
+<h2>About the Email Module<a class="headerlink" href="#about-the-email-module" title="Permalink to this headline">¶</a></h2>
+<p>The Email module makes it easy to send email messages with the P Framework. Currently, the module
+is quite rudamentry, and uses the <tt class="docutils literal"><span class="pre">sendmail</span></tt> system to deliver messages. The Email module supports
+both HTML and Plain Text emails, and can utilize <strong>Views</strong> as email bodies.</p>
+<p>The Email module is a wrapper around the <strong>node-email</strong> node modulea available at <a class="reference external" href="https://github.com/aheckmann/node-email">https://github.com/aheckmann/node-email</a></p>
+</div>
+<div class="section" id="changing-the-sender">
+<h2>Changing the Sender<a class="headerlink" href="#changing-the-sender" title="Permalink to this headline">¶</a></h2>
+<p>To change the displayed sender for your app, modify the <tt class="docutils literal"><span class="pre">email.sendFrom</span></tt> variable in <tt class="docutils literal"><span class="pre">config/environment.js</span></tt>.</p>
+</div>
+<div class="section" id="future-plans">
+<h2>Future Plans<a class="headerlink" href="#future-plans" title="Permalink to this headline">¶</a></h2>
+<p>Plans for a more advanced email system are underway for version <cite>1.1</cite> of P. These plans include custom SMTP transport,
+and enhancements to HTML/Plain Text view emails, as well as integration into a possible Account Permission System.</p>
+</div>
+<div class="section" id="method-definitions">
+<h2>Method Definitions<a class="headerlink" href="#method-definitions" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>P.email(to, subject, message, [options], [callback])</dt>
+<dd><p class="first">Sends an email with a specified subject and message to the specified sender.</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">string</span></tt> to - The recipient email address</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">string</span></tt> subject - The message subject</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">string</span></tt> message - The body of the message</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">object</span></tt> [options] - An optional key-value pair which can specify more options. See <strong>node-email</strong> for a complete list of options</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">function</span></tt> [callback] - An optional callback which will be triggered when the email is done sending (along with any errors)</p>
+<p class="last"><strong>&#64;return</strong>                          None.</p>
+</dd>
+</dl>
+<hr class="docutils" />
+<dl class="docutils">
+<dt>P.emailView(to, subject, view_name, [options], [callback])</dt>
+<dd><p class="first">Sends an HTML email to the specified sender with the rendered contents of the view.</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">string</span></tt> to - The recipient email address</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">string</span></tt> subject - The message subject</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">string</span></tt> view_name - The view to use for the message body</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">object</span></tt> [options] - An optional key-value pair which can <strong>both options for the view, and node-email options</strong></p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">function</span></tt> [callback] - An optional callback which will be triggered when the email is done sending (along with any errors)</p>
+<p class="last"><strong>&#64;return</strong>                          None.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As of now, there is no way to send Plain-Text view emails. You could, as a workaround, use the <tt class="docutils literal"><span class="pre">P.email</span></tt> function, and manually render the view with <tt class="docutils literal"><span class="pre">P.snippet</span></tt>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="p_modules.html" title="Extending P With Modules"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="view_module.html" title="View Module"
+             >previous</a> |</li>
+        <li><a href="index.html">P 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Jesse Dunlap.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.Theme by <a href="http://github.com/vkvn">vkvn</a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+Directory Structure
+===================
+
+This document describes the directory structure of a blank P application, giving you a
+better idea of where to put your files.
+   
+
+app
+===
+
+controllers
+-----------
+This is where your controller files are stored.
+
+data
+----
+P uses this folder to store **session JSON files**. You can also use it to store
+any flat-file based data that you wish.
+
+models
+------
+This is where your model files are stored.
+
+public
+------
+All public/static resources are stored here...
+
+* img - images
+* js - JavaScript files (client-side)
+* css - CSS stylesheets
+
+scripts
+-------
+..deprecated:: This directory has been replaced with ``public/js``.
+
+strings
+-------
+String snippets are stored here, in a subdirectory corresponding to the
+**localization** that has been set in ``config/environment.js``.
+
+views
+-----
+View files are stored here, in a subdirectory corresponding to the
+**localization** that has been set in ``config/environment.js``.
+
+
+bin
+===
+Binary files relating to P or your application can be stored here.
+
+
+command_modules
+===============
+Command modules, which extend the functionality of the P command prompt
+are stored here.
+
+config
+======
+Configuration files are stored here, and auto-loaded when a user connects
+to the P application.
+
+.. note:: Any files in the ``global`` subdirectory will be ignored by the auto-loader.
+
+docs
+====
+Contains the P documentation files.
+
+.. note:: This folder may or may not exist depending on your P package.
+
+lib
+===
+P library files are stored here.
+
+modules
+=======
+P modules, which enhance the functionality of the P object are stored in this folder,
+and scanned for autoload when a user connects to the app.

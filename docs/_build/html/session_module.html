@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Session Module &mdash; P 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="P 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="String Module" href="string_module.html" />
+    <link rel="prev" title="Model Module" href="model_module.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="string_module.html" title="String Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="model_module.html" title="Model Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">P 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Session Module</a><ul>
+<li><a class="reference internal" href="#about-the-session-module">About the Session Module</a></li>
+<li><a class="reference internal" href="#unique-sessions">Unique Sessions</a></li>
+<li><a class="reference internal" href="#method-definitions">Method Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="model_module.html"
+                        title="previous chapter">Model Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="string_module.html"
+                        title="next chapter">String Module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/session_module.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="sidebar">
+<p class="first sidebar-title">Module Information</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Implemented In:</th><td class="field-body"><tt class="docutils literal"><span class="pre">modules/Session.js</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Depends On:</th><td class="field-body">Core, Controller, Global, ClientSync</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="session-module">
+<h1>Session Module<a class="headerlink" href="#session-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about-the-session-module">
+<h2>About the Session Module<a class="headerlink" href="#about-the-session-module" title="Permalink to this headline">¶</a></h2>
+<p>The Session module allows your application to store persistant session data
+for connected clients. This session data will automatically be loaded upon
+connection of a returning client.</p>
+<p>Session data is stored in <tt class="docutils literal"><span class="pre">.json</span></tt> files in the <tt class="docutils literal"><span class="pre">app/data</span></tt> directory.</p>
+<p>For additional information, see the <strong>Sessions</strong> guide.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This module has a few unusual dependencies because it handles a good portion of the client&#8217;s connection process.</p>
+</div>
+</div>
+<div class="section" id="unique-sessions">
+<h2>Unique Sessions<a class="headerlink" href="#unique-sessions" title="Permalink to this headline">¶</a></h2>
+<p>Automatic precaution is taken to ensure that P sessions are unique between
+clients and servers, and different P applications. To make sure that your
+app is completely unique, the unique client ID assigned by the P server
+uses a customized <tt class="docutils literal"><span class="pre">sessionKey</span></tt> from <tt class="docutils literal"><span class="pre">config/global/app.js</span></tt> to make your
+app&#8217;s assigned client ID&#8217;s 100% unique.</p>
+<p>Before deploying your app in a production environment, it is suggested that
+you change the <tt class="docutils literal"><span class="pre">sessionKey</span></tt> variable in <tt class="docutils literal"><span class="pre">config/global/app.js</span></tt>.</p>
+<p>For more information, see the <strong>Production</strong> guide.</p>
+</div>
+<div class="section" id="method-definitions">
+<h2>Method Definitions<a class="headerlink" href="#method-definitions" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>P.session(key)</dt>
+<dd><p class="first">Returns the value for the specified <tt class="docutils literal"><span class="pre">key</span></tt>.</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">string</span></tt> key - The key you wish to look up.</p>
+<p class="last"><strong>&#64;return</strong>                          <tt class="docutils literal"><span class="pre">id</span></tt> The value corresponding to the specified key.</p>
+</dd>
+</dl>
+<hr class="docutils" />
+<dl class="docutils">
+<dt>P.session(key, value)</dt>
+<dd><p class="first">Sets a session variable.</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">string</span></tt> key - The key you wish to set</p>
+<p><strong>&#64;param</strong>                           <tt class="docutils literal"><span class="pre">id</span></tt> value - Any JSON-serializable value, which will correspond to the specified key.</p>
+<p class="last"><strong>&#64;return</strong>                          None.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="string_module.html" title="String Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="model_module.html" title="Model Module"
+             >previous</a> |</li>
+        <li><a href="index.html">P 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Jesse Dunlap.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.Theme by <a href="http://github.com/vkvn">vkvn</a>
+    </div>
+  </body>
+</html>

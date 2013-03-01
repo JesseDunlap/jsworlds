@@ -1,0 +1,160 @@
+<% include layout/header %>
+<% include layout/nav %>
+
+<div class="row">
+	<div class="three columns">
+		<ul class="nav-bar vertical">
+			<li><a href="p-operator.html">1. The P Operator</a></li>
+			<li class="active"><a href="p-mvc.html">2. The P MVC</a></li>
+			<li><a href="controllers.html">3. Controllers</a></li>
+			<li><a href="views.html">4. Views</a></li>
+			<li><a href="#">5. Models</a></li>
+		</ul>
+	</div>
+
+	<div class="nine columns">
+		<div class="row">
+			<div class="panel">
+				<div class="row">
+					<div class="twelve columns">
+						<h1>The P MVC</h1>
+						<p>Organizational structure of a P app</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="row">
+				<div class="five columns">
+					<img src="images/MVC.png" alt="An MVC Communication Diagram" />
+				</div>
+			
+				<div class="six columns">
+					<p><strong>MVC</strong>&mdash;or Model, View, Controller&mdash;organization structures
+						help keep your app organized into parts. They define how different parts of your app
+						should communicate in order to optimize your code for extendability, change, reuse,
+						and the fields that team members are best at.</p>
+					
+					<p>
+						Like many application frameworks, P uses an <strong>MVC</strong>
+						organizational structure. MVCs consist of three main parts:
+					</p>
+					
+					<ul class="disc">
+						<li>Models</li>
+						<li>Views</li>
+						<li>Controllers</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="row">
+				
+				<div class="panel">
+					<p>
+						<strong>Models</strong> contain all of the code that pertains to
+						creating, reading, updating, and deleting data.
+					</p>
+				
+					<p>
+						<span class="label">Models should...</span>
+					</p>
+				
+					<p>
+						<ul class="disc">
+							<li>Accept method calls from the <strong>Controller</strong></li>
+							<li>Store data to be accessed by the controller.</li>
+							<li>Interact with the <strong>data store</strong> which may be in the form of files, databases, environmental data, etc.</li>
+							<li>Notify the <strong>Controller</strong> when data has changed or new data is available through <strong>emitters</strong>.</li>
+						</ul>
+					</p>
+				
+					<p>
+						<span class="alert label">Models should not...</span>
+					</p>
+				
+					<p>
+						<ul class="disc">
+							<li>Talk to the view in any way.</li>
+							<li>Call Controller methods.</li>
+						</ul>
+					</p>
+				</div>
+			
+			
+				<div class="panel">
+					<p>
+						<strong>Views</strong> are usually written in some type of markup language, infused with
+						<strong>templating code</strong> which allows them to utilize data given to them by the <strong>Controller</strong>.
+					</p>
+				
+					<p>
+						Views also trigger controller actions when a user performs some kind of interaction, whether
+						it be a click, mouse-over, button press, etc.
+					</p>
+				
+					<p>
+						<span class="label">Views should...</span>
+					</p>
+				
+					<p>
+						<ul class="disc">
+							<li>Display data from the Controller to the user.</li>
+							<li>Call Controller methods for the purpose of user interaction.</li>
+						</ul>
+					</p>
+				
+					<p>
+						<span class="alert label">Views should not...</span>
+					</p>
+				
+					<p>
+						<ul class="disc">
+							<li>Talk to the model in any way.</li>
+							<li>Retrieve data from the Controller.</li>
+						</ul>
+					</p>
+				</div>
+			
+			
+				<div class="panel">
+					<p>
+						<strong>Controllers</strong> act as the "glue" between <strong>Models</strong> and <strong>Views</strong>.
+						They contain <strong>actions</strong> which perform a task. Most of your app's logic will happen in the
+						Controller, and Controllers can display Views, as well as send them data.
+					</p>
+				
+					<p>
+						<span class="label">Controllers should...</span>
+					</p>
+				
+					<p>
+						<ul class="disc">
+							<li>Act as a bridge between the View and the Model.</li>
+							<li>Render Views with data from the Model.</li>
+							<li>Validate user input.</li>
+							<li>Call Model methods to interact with data at an abstracted level.</li>
+							<li>Listen for Model emitters when a data change happens.</li>
+							<li>Access Model data via the Model's variables.</li>
+						</ul>
+					</p>
+				
+					<p>
+						<span class="alert label">Controllers should not...</span>
+					</p>
+				
+					<p>
+						<ul class="disc">
+							<li>Call methods inside of the View.</li>
+							<li>Have HTML or any form of UI code.</li>
+							<li>Process data unless it is temporary such as the <code>P.global</code> object.</li>
+						</ul>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<% include layout/footer %>

@@ -1,0 +1,12 @@
+Page Module
+***********
+
+The Page Module provides a few functions for interacting with the page.
+
+
+Setting the Page Title
+======================
+
+.. code-block:: javascript
+
+   P.title("Page Title");

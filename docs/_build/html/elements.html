@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Elements &mdash; P 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="P 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Strings and Snippets" href="strings.html" />
+    <link rel="prev" title="Controllers" href="controllers.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="strings.html" title="Strings and Snippets"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="controllers.html" title="Controllers"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">P 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Elements</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#selecting-elements">Selecting Elements</a></li>
+<li><a class="reference internal" href="#selecting-children">Selecting Children</a></li>
+<li><a class="reference internal" href="#rendering-a-view-in-an-element">Rendering a View In an Element</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="controllers.html"
+                        title="previous chapter">Controllers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="strings.html"
+                        title="next chapter">Strings and Snippets</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/elements.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="sidebar">
+<p class="first sidebar-title">Module Information</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Implemented In:</th><td class="field-body">Elements.js</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Dependencies:</th><td class="field-body">Core</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Jesse Dunlap</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="elements">
+<h1>Elements<a class="headerlink" href="#elements" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Elements are one of the most important, and exiting features of the P Framework. Elements
+provide a wrapper for you to directly modify HTML on the current user&#8217;s page, or
+through the <strong>ClientSync</strong> API, another user&#8217;s page.</p>
+<p>The Elements API directly mimics and corresponds to the jQuery API, with a few exceptions.</p>
+</div>
+<div class="section" id="selecting-elements">
+<h2>Selecting Elements<a class="headerlink" href="#selecting-elements" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">element</span> <span class="o">=</span> <span class="nx">P</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;jquery selector&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The element selector can literally be any kind of jQuery selector, as they directly map to jQuery.</p>
+</div>
+</div>
+<div class="section" id="selecting-children">
+<h2>Selecting Children<a class="headerlink" href="#selecting-children" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">parent</span> <span class="o">=</span> <span class="nx">P</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#parent&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#child&#39;</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">selector</span><span class="p">);</span> <span class="c1">// &quot;#parent &gt; #child&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rendering-a-view-in-an-element">
+<h2>Rendering a View In an Element<a class="headerlink" href="#rendering-a-view-in-an-element" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">P</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#element&#39;</span><span class="p">).</span><span class="nx">render</span><span class="p">(</span><span class="s2">&quot;view&quot;</span><span class="p">,</span> <span class="p">[</span><span class="nx">options</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="strings.html" title="Strings and Snippets"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="controllers.html" title="Controllers"
+             >previous</a> |</li>
+        <li><a href="index.html">P 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Jesse Dunlap.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.Theme by <a href="http://github.com/vkvn">vkvn</a>
+    </div>
+  </body>
+</html>

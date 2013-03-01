@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+
+
+if (process.argv.length >= 3) {
+	if (process.argv[2] === "engage") {
+		var dir = __dirname;
+		
+		while (dir.replace("\\", "/") != dir)
+			dir = dir.replace("\\", "/");
+	
+		var parts  = dir.split("/");
+		parts.pop();
+
+		var from    = parts.join("/") + "/";
+		var to	 	= process.env.PWD;
+
+		if (process.argv.length >= 4)
+			if (process.argv[3] != "./" && process.argv[3] != ".") to = process.argv[3];
+		
+		console.log(from + " => " + to);
+		require('wrench').copyDirSyncRecursive(from, to);
+		console.log("P Framework ready");
+	}
+	
+	else if (process.argv[2] === "start") {
+		var sys = require('sys')
+		var exec = require('child_process').exec;
+		function puts(error, stdout, stderr) { sys.puts(stdout) }
+		exec("node " + process.env.PWD + "/app.js", puts);
+	}
+	
+	else if (process.argv[2] === "develop") {
+		var sys = require('sys')
+		var exec = require('child_process').exec;
+		function puts(error, stdout, stderr) { sys.puts(stdout) }
+		exec("nodemon " + process.env.PWD + "/app.js", puts);
+	}
+}
+
+else {
+	console.log("Usage: p engage");
+}

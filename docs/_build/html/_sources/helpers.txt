@@ -1,0 +1,24 @@
+.. sidebar:: Module Information
+
+   :Implemented In:
+      Helpers.js
+   
+   :Dependencies:
+      Core
+      
+   :Author:
+      Jesse Dunlap
+
+
+Helpers Module
+**************
+
+The Helpers Module provides various miscellaneous helper functions for use in your app.
+
+
+P.parseDataURL(string)
+======================
+
+Parses ``string`` (assumed to be a data URL) and returns a Node ``Buffer``.
+
+.. note:: The shorthand of this function is ``P.pdu``

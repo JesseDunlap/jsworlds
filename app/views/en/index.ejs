@@ -1,0 +1,46 @@
+<% include layout/header %>
+
+<div class="row">
+	<div class="twelve columns">
+		<div class="callout panel">
+			<h1>Welcome to the P Framework</h1>
+			<p>If you're seeing this page, then you're ready to get started developing your brand new, shiny P Application!</p>
+			
+			<div>
+				<a href="http://p.jessedunlap.me/#tutorial" target="_blank" class="button">Watch a Tutorial</a>
+				<a href="http://p.jessedunlap.me/docs/" target="_blank" class="button">Read the Docs</a>
+				<a href="https://bitbucket.org/hydrais/p-framework" target="_blank" class="button">P on BitBucket</a>
+				<% if (P.config.platformEnabled == true) { %>
+					<a href="#" p:link="platform.show" class="button">Platform</a>
+				<% } %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="six columns">
+			<h3 class="subheader">Get Started</h3>
+			<p>
+				<ol>
+					<li><a href="http://p.jessedunlap.me/#tutorial" target="_blank">Watch the tutorial</a></li>
+					<li><a href="http://p.jessedunlap.me/docs/">Read the Documentation</a></li>
+					<li>Check out <kbd>app/controllers/index.js</kbd> to see the starting point for this application</li>
+				</ol>
+			</p>
+	</div>
+	
+	<div class="six columns">
+		<div class="panel">
+			<h3 class="subheader">What is P?</h3>
+			<p>
+				The <strong>P Framework</strong>, lovingly called <strong>"P"</strong> is a new type of web framework
+				written using <strong>Node.js</strong>. P has been designed from the ground up to be <strong>real-time</strong>,
+				<strong>blazing fast</strong>, and <strong>socially connected.</strong> Instead of <strong>HTTP</strong>, P
+				utilizes <strong>Sockets</strong> to have an <strong>always-on</strong> connection to the server.
+			</p>
+		</div>
+	</div>
+</div>
+
+<% include layout/footer %>

@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The P Debugger System &mdash; P 0.1.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="P 0.1.3 documentation" href="index.html" />
+    <link rel="next" title="Accounts Module" href="accounts_module.html" />
+    <link rel="prev" title="Accessing Other Clients" href="clientsync.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="accounts_module.html" title="Accounts Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="clientsync.html" title="Accessing Other Clients"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">P 0.1.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The P Debugger System</a><ul>
+<li><a class="reference internal" href="#logging-a-notice">Logging a Notice</a></li>
+<li><a class="reference internal" href="#logging-a-warning">Logging a Warning</a></li>
+<li><a class="reference internal" href="#logging-an-error">Logging an Error</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="clientsync.html"
+                        title="previous chapter">Accessing Other Clients</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="accounts_module.html"
+                        title="next chapter">Accounts Module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/debugger.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="sidebar">
+<p class="first sidebar-title">Module Information</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Implemented In:</th><td class="field-body">Debugger.js</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Dependencies:</th><td class="field-body">Core</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Jesse Dunlap</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-p-debugger-system">
+<h1>The P Debugger System<a class="headerlink" href="#the-p-debugger-system" title="Permalink to this headline">¶</a></h1>
+<p>P offers an extended version of <tt class="docutils literal"><span class="pre">console.log</span></tt>, which allows you to send different
+kinds of messages. In the near future, you will be able to disable any or all of the
+P logger messages.</p>
+<div class="section" id="logging-a-notice">
+<h2>Logging a Notice<a class="headerlink" href="#logging-a-notice" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">P</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">notice</span><span class="p">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging-a-warning">
+<h2>Logging a Warning<a class="headerlink" href="#logging-a-warning" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">P</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">warning</span><span class="p">(</span><span class="s2">&quot;Warning World!&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging-an-error">
+<h2>Logging an Error<a class="headerlink" href="#logging-an-error" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">P</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Error World!&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="accounts_module.html" title="Accounts Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="clientsync.html" title="Accessing Other Clients"
+             >previous</a> |</li>
+        <li><a href="index.html">P 0.1.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Jesse Dunlap.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.Theme by <a href="http://github.com/vkvn">vkvn</a>
+    </div>
+  </body>
+</html>
