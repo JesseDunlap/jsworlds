@@ -1,0 +1,79 @@
+<style type="text/css">
+.editWindow {
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	width: 300px;
+	background-color: #000;
+	overflow-y: scroll;
+	border: 5px solid #222;
+}
+
+.layerWindow {
+	position: fixed;
+	bottom:   0px;
+	padding: 10px;
+	right:    300px;
+	background-color: #fff;
+	border: 5px solid #222;
+}
+</style>
+
+<div class="layerWindow">
+	<strong>LAYER (<span id="currLayer">0</span>)</strong><br />
+	<input class="layerButton" type="radio" checked name="layer" value="0"> Background<br />
+	<input class="layerButton" type="radio" name="layer" value="5"> Player<br />
+	<input class="layerButton" type="radio" name="layer" value="10"> Animated<br />
+	<input class="layerButton" type="radio" name="layer" value="15"> Overhang<br />
+</div>
+
+<div class="editWindow">
+	<img id="theImage" src="app/public/assets/sprites/default.png" />
+</div>
+
+<script type="text/javascript">
+
+$('.layerButton').click(function() {
+	if ($(this).is(":checked")) {
+		window.currentLayer = $(this).val();
+		$('#currLayer').html(window.currentLayer);
+	}
+});	
+
+$('#theImage').on("mouseup", function(e) {
+	$('#selector').remove();
+	
+	var x = Math.floor(e.offsetX / 32);
+	var y = Math.floor(e.offsetY / 32);
+	
+	var gX = 32 * Math.floor((e.pageX - 16) / 32);
+	var gY = 32 * Math.floor((e.pageY) / 32);
+	
+	$('<div></div>')
+	
+	.attr("id", "selector")
+	
+	.css({
+		'width': 			'32px',
+		'height': 			'32px',
+		'background-color': 'rgba(0, 0, 0, 0.5)',
+		'border': 			'1px solid #fff',
+		'position': 		'fixed',
+		'z-index': 			'999',
+		'left': 			gX + 16 + "px",
+		'top': 				gY + "px",
+		'display': 			'none'
+	})
+	
+	.appendTo($('body'))
+	
+	.fadeIn(200, function() {
+		$(this).fadeOut(200, function() {
+			$(this).remove();
+		});
+	});
+
+	window.currentType = (y * 8 + x);
+});
+</script>

@@ -58,9 +58,8 @@ module.exports = function(P) {
 		else {
 			P.account = account;
 		
-			P.accounts.register(function() {
-				P.controller("account").login();
-			});
+			P.accounts.register();
+			P.controller("account").login();
 		}
 	};
 };

@@ -1,1 +1,190 @@
-<h1>Hello, <%=P.account.firstName%>!</h1>
+<style type="text/css" media="screen">
+	body {
+		background-color: #000;
+	}
+</style>
+
+<script src="app/public/js/crafty-min.js"></script>
+<script src="app/public/js/ss.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+
+	var createTile = function(x, y, layer, tile) {
+		var e = Crafty.e("2D, Canvas, Mouse, sprite" + tile[0])
+
+		.attr({ 
+			x: 		x * 32, 
+			y: 		y * 32,  
+			z: 		layer, 
+			
+			w: 		32, 
+			h: 		32,
+			
+			blockX: x,
+			blockY: y,
+			
+			sprite: tile[0]
+		})
+
+		.bind("MouseDown", function(e) {
+			if (e.mouseButton === 2) {
+				var blockX = this.attr("blockX");
+				var blockY = this.attr("blockY");
+				var layer  = window.currentLayer;
+			}
+			
+			else {
+				var blockX = this.attr("blockX");
+				var blockY = this.attr("blockY");
+				var layer  = window.currentLayer;
+				var type   = window.currentType;
+				
+				this.attr("sprite", type);
+
+				P.controller("map").setTile({
+					x: 		blockX,
+					y: 		blockY,
+					layer: 	layer,
+					tile: 	type,
+					map: 	window.currentMap.id
+				});
+			}
+		})
+		
+		.bind("MouseOver", function(e) {
+			if (window.mouseDown) {
+				var blockX = this.attr("blockX");
+				var blockY = this.attr("blockY");
+				var layer  = window.currentLayer;
+				var type   = window.currentType;
+
+				P.controller("map").setTile({
+					x: 		blockX,
+					y: 		blockY,
+					layer: 	layer,
+					tile: 	type,
+					map: 	window.currentMap.id
+				});
+			}
+		});
+
+		if (tile[1].blocked)
+			e.addComponent("Blocked");
+			
+		return e;
+	}
+
+	$(document).on("mousedown", function() {
+		window.mouseDown = true;
+	})
+	
+	.on("mouseup", function() {
+		window.mouseDown = false;
+	});
+
+	window.currentLayer = 0;
+	window.currentType  = 85;
+
+	window.tiles = [];
+
+  	Crafty.init(640, 480);
+
+  	Crafty.canvas.init(); // Create a Canvas Element
+
+	Crafty.scene("main", function() {
+		(function($) {
+			var object = {};
+			var i      = 0;
+
+			for (var y = 0; y < 908; y++) {
+				for (var x = 0; x < 8; x++) {
+					object["sprite" + i] = [ x, y ];
+					i++;
+				}
+			}
+
+			Crafty.sprite(32, "app/public/assets/sprites/default.png", object);
+
+			Crafty.sprite(32, "app/public/assets/sprites/sprites/3.bmp", {
+				playerSprite0: [0, 0]
+			});
+
+			Crafty.background("#000");
+			
+			var renderMap = function(map) {
+				/*******************************************
+				 * Background Layer
+				 ******************************************/
+				for (var layer in map.tiles) {
+					var tiles = map.tiles[layer];
+			
+					for (var x = 0; x < 20; x++) {
+						for (var y = 0; y < 15; y++) {
+							if (tiles[x][y][0] !== 0) {
+								var e = createTile(x, y, layer, tiles[x][y]);
+
+								window.tiles[layer] = window.tiles[layer] || [];
+								window.tiles[layer][x] = window.tiles[layer][x] || [];
+
+								window.tiles[layer][x][y] = e;
+							}
+							else {
+								window.tiles[layer] = window.tiles[layer] || [];
+								window.tiles[layer][x] = window.tiles[layer][x] || [];
+							}
+						}
+					}
+				}
+			};
+
+			P.socket.on("tile", function(data) {
+				if (data.map.id === window.currentMap.id) {
+					var e = window.tiles[data.layer][data.x][data.y];
+					
+					if (e === undefined) {
+						e = createTile(data.x, data.y, data.layer, data.tile);
+						window.tiles[data.layer][data.x][data.y] = e;
+					}
+					
+					e.removeComponent("sprite" + e.attr("sprite"));
+					e.addComponent("sprite" + data.tile);
+				}
+			});
+		
+		
+			window.getMap = function(id) {
+				P.controller("map").getMap(id, function(tiles) {
+					window.currentMap = SS.deserialize(tiles);
+
+					for (var layer in window.tiles) {
+						for (var x = 0; x < window.tiles[layer].length; x++) {
+							for (var y = 0; y < window.tiles[layer][x].length; y++) {
+								window.tiles[layer][x][y].destroy();
+							}
+						}
+					}
+
+					window.tiles = {};
+
+					renderMap(window.currentMap);
+
+					Crafty.e("2D, Canvas, Player, Fourway, playerSprite0")
+
+					.attr({
+						x: window.currentMap.startLocation.x,
+						y: window.currentMap.startLocation.y,
+						z: 5,
+						w: 32,
+						h: 32
+					})
+
+					.fourway(3)
+				});
+			};
+
+			window.getMap(0000);
+		})(jQuery);
+	});
+	
+	Crafty.scene("main");
+</script>

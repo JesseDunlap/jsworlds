@@ -8,6 +8,7 @@ module.exports = function(P) {
 	this.index = function() {
 		if (P.accounts.isLoggedIn()) {
 			P.controller("game").index();
+			P.controller("map").edit();
 		}
 		
 		else {

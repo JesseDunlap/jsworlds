@@ -35,34 +35,28 @@ exports.module = function(P) {
 			}
 			
 			else {
-				try {
-					P.accountDb.accounts.find({ 
-						_id: 	P.accountDb.ObjectId(P.session("accountLogin")) 
-					},
+				P.accountDb.accounts.find({ 
+					_id: 	require("mongojs")({}).ObjectId(P.session("accountLogin"))
+				},
+			
+				function(error, results) {
+					if (error) {
+						P.log.error("Error when communicating with the Account Database.");
+						return
+					}
 				
-					function(error, results) {
-						if (error) {
-							P.log.error("Error when communicating with the Account Database.");
-							return
-						}
-					
-						if (results.length > 0) {
-							P.account = results[0];
-							callback();
-							return;
-						}
-					
-						/** 
-						 * Skeleton Account
-						 */
-						P.account = this.getSkeleton();
+					if (results.length > 0) {
+						P.account = results[0];
 						callback();
-					});
-				}
+						return;
+					}
 				
-				catch (e) {
-					
-				}
+					/** 
+					 * Skeleton Account
+					 */
+					P.account = this.getSkeleton();
+					callback();
+				});
 			}
 		},
 		
