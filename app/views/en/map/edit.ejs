@@ -13,19 +13,108 @@
 .layerWindow {
 	position: fixed;
 	bottom:   0px;
+	top: 0px;
 	padding: 10px;
 	right:    300px;
 	background-color: #fff;
 	border: 5px solid #222;
+	width: 200px;
+}
+
+.propertiesWindow {
+	position: fixed;
+	bottom: 0px;
+	top: 0px;
+	padding: 10px;
+	right: 500px;
+	border: 5px solid #222;
+	background-color: #fff;
+	width: 200px;
 }
 </style>
 
+<div class="propertiesWindow">
+	<form p:action="map.setDetails">
+	    <input id="mapID" name="id" type="hidden" value="" />
+
+		<p>	
+			<strong>MAP NAME</strong>
+			<input id="mapName" name="name" placeholder="Map Name" />
+		</p>
+
+		<p>
+            <strong>ALIGNMENT</strong>
+        	<select id="mapAlignment" name="alignment">
+        	    <option value="Peaceful">Peaceful</option>
+        	    <option value="Dangerous">Dangerous</option>
+        	    <option value="Lawless">Lawless</option>
+        	</select>
+        </p>
+
+		<p>
+			<strong>MAP MUSIC</strong>
+			<input id="mapMusic" name="music" placeholder="Background Music URL" />
+		</p>
+
+		<p>
+            <strong>DESCRIPTION</strong>
+            <textarea id="description" name="description" placeholder="Map Description"></textarea>
+        </p>
+
+		<p>
+            <input type="submit" class="full-width small button" value="Save" />
+		</p>
+	</form>
+
+	<hr />
+
+	<p>
+	    <strong>GOTO MAP</strong>
+	    <input type="text" id="gotoMapId" placeholder="Map ID" />
+	    <a class="full-width small button" href="javascript:gotoMap();">Goto</a>
+	</p>
+</div>
+
 <div class="layerWindow">
-	<strong>LAYER (<span id="currLayer">0</span>)</strong><br />
-	<input class="layerButton" type="radio" checked name="layer" value="0"> Background<br />
-	<input class="layerButton" type="radio" name="layer" value="5"> Player<br />
-	<input class="layerButton" type="radio" name="layer" value="10"> Animated<br />
-	<input class="layerButton" type="radio" name="layer" value="15"> Overhang<br />
+	<p>
+		<strong>TOOLS</strong><br />
+		<a class="small full-width button">Fill Layer</a>
+		<a class="small full-width button">Clear Map</a>
+	</p>
+
+	<hr />
+	
+	<p>
+		<strong>LAYER (<span id="currLayer">0</span>)</strong><br />
+		<input class="layerButton" type="radio" checked name="layer" value="0"> Background (0)<br />
+		<input class="layerButton" type="radio" name="layer" value="1"> Layer 1 (1)<br />
+		<input class="layerButton" type="radio" name="layer" value="2"> Layer 2 (2)<br />
+		<input class="layerButton" type="radio" name="layer" value="3"> Layer 3 (3)<br />
+		<input class="layerButton" type="radio" name="layer" value="4"> Layer 4 (4)<br />
+		<input class="layerButton" type="radio" name="layer" value="10"> Animated (10)<br />
+		<input class="layerButton" type="radio" name="layer" value="11"> Overhang 1 (11)<br />
+		<input class="layerButton" type="radio" name="layer" value="12"> Overhang 2 (12)<br />
+		<input class="layerButton" type="radio" name="layer" value="13"> Overhang 3 (13)<br />
+		<input class="layerButton" type="radio" name="layer" value="14"> Overhang 4 (14)<br />
+		<input class="layerButton" type="radio" name="layer" value="15"> Overhang 5 (15)<br />
+		<input class="layerButton" type="radio" name="layer" value="20"> Roof (20)<br />
+		<strong>CUSTOM LAYER</strong><br />
+		<input class="customLayer" type="text" name="customLayer" value="0" placeholder="Custom" />
+	</p>
+
+	<hr />
+	
+	<p>
+		<div style="float: left; padding-top: 10px;">
+			<strong>ACTIVE SPRITE</strong>
+		</div>
+
+		<div style="float: right;">
+			<div id="tilePreview" style="width: 32px; height: 32px; text-align: center; padding-top: 8px; border: 1px solid #333; font-weight: bold; max-width: 32px; max-height: 32px; background-position: 0px 0px; background-image: url(app/public/assets/sprites/default.png)">0</div>
+		</div>
+
+		<div style="clear: both;"></div>
+	</p>
 </div>
 
 <div class="editWindow">
@@ -34,46 +123,46 @@
 
 <script type="text/javascript">
 
+window.gotoMap = function() {
+    var id = $('#gotoMapId').val();
+    console.log(id);
+    window.getMap(id);
+};
+
 $('.layerButton').click(function() {
 	if ($(this).is(":checked")) {
 		window.currentLayer = $(this).val();
 		$('#currLayer').html(window.currentLayer);
+		$('.customLayer').val(window.currentLayer);
 	}
 });	
 
+$('.customLayer').on("keyup", function(e) {
+	if (e.which == 13) {
+		window.currentLayer = $(this).val();
+		$('#currLayer').html(window.currentLayer);
+		$('.customLayer').val(window.currentLayer);
+		$('.layerButton').prop("checked", false);
+		$('.layerButton[value="' + window.currentLayer + '"]').prop('checked', true);
+	}
+});
+
 $('#theImage').on("mouseup", function(e) {
-	$('#selector').remove();
-	
 	var x = Math.floor(e.offsetX / 32);
 	var y = Math.floor(e.offsetY / 32);
-	
-	var gX = 32 * Math.floor((e.pageX - 16) / 32);
-	var gY = 32 * Math.floor((e.pageY) / 32);
-	
-	$('<div></div>')
-	
-	.attr("id", "selector")
-	
-	.css({
-		'width': 			'32px',
-		'height': 			'32px',
-		'background-color': 'rgba(0, 0, 0, 0.5)',
-		'border': 			'1px solid #fff',
-		'position': 		'fixed',
-		'z-index': 			'999',
-		'left': 			gX + 16 + "px",
-		'top': 				gY + "px",
-		'display': 			'none'
-	})
-	
-	.appendTo($('body'))
-	
-	.fadeIn(200, function() {
-		$(this).fadeOut(200, function() {
-			$(this).remove();
-		});
-	});
 
 	window.currentType = (y * 8 + x);
+
+	$('#tilePreview').css("background-position", (-x * 32) + "px " + (-y * 32) + "px");
+	$('#tilePreview').html(window.currentType);
+});
+
+
+$('input,textarea').on("focus", function() {
+    window.player.disableControl();
+})
+
+.on("blur", function() {
+    window.player.enableControl();
 });
 </script>

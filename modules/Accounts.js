@@ -6,6 +6,8 @@
 exports.autoload = false;
 
 exports.module = function(P) {
+    var $this = this;
+
 	P.depends(["Session"]);
 	
 	P.accounts = {
@@ -54,7 +56,7 @@ exports.module = function(P) {
 					/** 
 					 * Skeleton Account
 					 */
-					P.account = this.getSkeleton();
+					P.account = {};
 					callback();
 				});
 			}
