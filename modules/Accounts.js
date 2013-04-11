@@ -30,7 +30,7 @@ exports.module = function(P) {
 				P.accountDb = P.lib("p/mongo").connect(["accounts"]);
 			
 			if (P.session("accountLogin") === undefined || P.session("accountLogin") === "null") {
-				P.account = this.getSkeleton();
+				P.account = P.accounts.getSkeleton();
 				callback();
 			}
 			
@@ -54,7 +54,7 @@ exports.module = function(P) {
 					/** 
 					 * Skeleton Account
 					 */
-					P.account = this.getSkeleton();
+					P.account = P.accounts.getSkeleton();
 					callback();
 				});
 			}
@@ -92,7 +92,7 @@ exports.module = function(P) {
 		
 		logout: function() {
 			P.session("accountLogin", "null");
-			P.account = this.getSkeleton();
+			P.account = P.accounts.getSkeleton();
 		},
 		
 		login: function(username, password, callback) {
