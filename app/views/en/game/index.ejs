@@ -2,12 +2,81 @@
 	body {
 		background-color: #000;
 	}
+
+	#title {
+	    font-weight: bold;
+	    position: fixed;
+	    z-index: 999;
+	    color: #fff;
+	    text-shadow: 0px 1px 1px #000,
+	                 0px 0px 1px #000;
+	    top: -10px;
+	    left: -10px;
+	    padding: 30px;
+
+	    -webkit-transition: all .1s;
+	}
 </style>
+
+<div id="title"></div>
 
 <script src="app/public/js/crafty-min.js"></script>
 <script src="app/public/js/ss.js"></script>
 
 <script type="text/javascript" charset="utf-8">
+    $('#title').on("hover", function() {
+        $(this).hide();
+    })
+
+    .on("mouseleave", function() {
+        $(this).show();
+    });
+
+    P.socket.on("player-changed-pos", function(data) {
+        window.players = window.players || {};
+        if (data.map != window.currentMap.id) return;
+
+        if (window.players[data.username] === undefined) {
+            window.players[data.username] = Crafty.e("2D, Canvas, Player, Fourway, Tween, playerSprite0")
+
+            .attr({
+                x: data.x,
+                y: data.y,
+                z: 5,
+                w: 32,
+                h: 32
+            })
+        }
+
+        else {
+            window.players[data.username].tween({ x: data.x, y: data.y }, 5);
+        }
+    });
+
+    P.socket.on("map-details-changed", function(map) {
+        if (map.id == window.currentMap.id) {
+            if (window.currentMap.name != map.name) {
+                $('#title').fadeOut(200, function() {
+                    $(this).html(map.name);
+                    $(this).fadeIn(200);
+                });
+            }
+
+            if (map.alignment == "Peaceful")
+                $('#title').animate({ 'color': '#fff' });
+            else if (map.alignment == "Dangerous")
+                $('#title').animate({ 'color': '#ff3c00' });
+            else if (map.alignment == "Lawless")
+                $('#title').animate({ 'color': 'red' });
+
+            $('#description').val(map.description);
+
+            window.currentMap.name = map.name;
+            window.currentMap.alignment = map.alignment;
+            window.currentMap.music = map.music;
+        }
+    });
+
 
 	var createTile = function(x, y, layer, tile) {
 		var e = Crafty.e("2D, Canvas, Mouse, sprite" + tile[0])
@@ -112,14 +181,29 @@
 			Crafty.background("#000");
 			
 			var renderMap = function(map) {
-				/*******************************************
-				 * Background Layer
-				 ******************************************/
+
+			    $('#mapName').val(map.name);
+			    $('#mapAlignment').val(map.alignment);
+			    $('#mapMusic').val(map.music);
+
+			    $('#title').html(map.name || "");
+			    $('#description').val(map.description || "");
+
+			    if (map.alignment == "Peaceful")
+                    $('#title').animate({ 'color': '#fff' });
+                else if (map.alignment == "Dangerous")
+                    $('#title').animate({ 'color': '#ff3c00' });
+                else if (map.alignment == "Lawless")
+                    $('#title').animate({ 'color': 'red' });
+
 				for (var layer in map.tiles) {
 					var tiles = map.tiles[layer];
-			
+					
 					for (var x = 0; x < 20; x++) {
 						for (var y = 0; y < 15; y++) {
+							tiles[x] = tiles[x] || [];
+							tiles[x][y] = tiles[x][y] || [0, 0];
+
 							if (tiles[x][y][0] !== 0) {
 								var e = createTile(x, y, layer, tiles[x][y]);
 
@@ -138,7 +222,10 @@
 			};
 
 			P.socket.on("tile", function(data) {
-				if (data.map.id === window.currentMap.id) {
+				if (data.map.id + "" === window.currentMap.id + "") {
+					window.tiles[data.layer] = window.tiles[data.layer] || [];
+					window.tiles[data.layer][data.x] = window.tiles[data.layer][data.x] || [];
+
 					var e = window.tiles[data.layer][data.x][data.y];
 					
 					if (e === undefined) {
@@ -153,8 +240,13 @@
 		
 		
 			window.getMap = function(id) {
+			    window.currentMap = window.currentMap || {};
+
 				P.controller("map").getMap(id, function(tiles) {
+				    $('#mapID[name="id"]').val(tiles.id);
+
 					window.currentMap = SS.deserialize(tiles);
+					window.currentMap.id = id;
 
 					for (var layer in window.tiles) {
 						for (var x = 0; x < window.tiles[layer].length; x++) {
@@ -168,17 +260,27 @@
 
 					renderMap(window.currentMap);
 
-					Crafty.e("2D, Canvas, Player, Fourway, playerSprite0")
+                    if (window.player === undefined) {
+                        window.player = Crafty.e("2D, Canvas, Player, Fourway, playerSprite0")
 
-					.attr({
-						x: window.currentMap.startLocation.x,
-						y: window.currentMap.startLocation.y,
-						z: 5,
-						w: 32,
-						h: 32
-					})
+                        .attr({
+                            x: window.currentMap.startLocation.x,
+                            y: window.currentMap.startLocation.y,
+                            z: 5,
+                            w: 32,
+                            h: 32
+                        })
 
-					.fourway(3)
+                        .bind("Moved", function(e) {
+                            P.controller("player").setLocation({
+                                map: window.currentMap.id,
+                                x: e.x,
+                                y: e.y
+                            });
+                        })
+
+                        .fourway(3)
+                    }
 				});
 			};
 

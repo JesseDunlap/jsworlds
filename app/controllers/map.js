@@ -11,8 +11,11 @@ module.exports = function(P) {
 	};
 
 	this.tileChanged = function(data) {
-		P.clients.forEach(function(c) {
-			c.socket.emit("tile", data);
+        P.socket.emit("tile", data);
+
+		P.clients.forEach(function(client) {
+            if (client != P)
+			    client.socket.emit("tile", data);
 		});
 	};
 
@@ -27,6 +30,9 @@ module.exports = function(P) {
 		
 		return require("superserialize").serialize({
 			id: 			mapID,
+            name:           P.globe.maps[mapID].name,
+            alignment:      P.globe.maps[mapID].alignment,
+            description:    P.globe.maps[mapID].description,
 			tiles: 			P.globe.maps[mapID].tiles,
 			music:  	 	P.globe.maps[mapID].music,
 			startLocation: 	P.globe.maps[mapID].startLocation,
@@ -69,4 +75,19 @@ module.exports = function(P) {
 			P.db.maps.save(map);
 		}
 	};
+
+    this.setDetails = function(mapData) {
+        var id = mapData.id;
+
+        for (var key in mapData) {
+            if (key !== 'id')
+                P.globe.maps[id][key] = mapData[key];
+        }
+
+        P.clients.forEach(function(client) {
+            client.socket.emit("map-details-changed", mapData);
+        });
+
+        $this.saveMaps();
+    };
 };
