@@ -1,7 +1,21 @@
-# README
+About JSWorlds
+--------------
 
-This program contains the ___ version of jsworlds.
+JSWorlds is a HTML5/JavaScript port of XtremeWorlds, created as a final project for a high school computer science
+course. JSWorlds, for those unfamiliar with XtremeWorlds, allows you to create your own 2D Massive Online Role-playing
+Games (MORPGs).
 
-Developers: Sir Jesse Dunlap & Sir Austin Bundy
 
-For troubleshooting e-mail: bundyaus@gmail.com or jdunlap0@gmail.com
+Authors
+-------
+
+**Jesse Dunlap**
+* [https://github.com/jessedunlap/](http://github.com/jessedunlap/)
+* [http://twitter.com/jessedunlap/](http://twitter.com/jessedunlap/)
+
+**Austin Bundy**
+* [https://github.com/bundyaus/](https://github.com/bundyaus/)
+
+License
+-------
+JSWorlds is released under the **MIT License**. For more information, please see **LICENSE.md**
