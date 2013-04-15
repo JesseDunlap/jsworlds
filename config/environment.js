@@ -44,7 +44,7 @@ module.exports = function(P) {
 				 * use when you load the MongoDB lib.
 				 */
 				mongo: {
-					host: 			"127.0.0.1",
+					host: 			"54.225.79.57",
 					port: 			"default",
 					username:		"",
 					password: 		"",
@@ -97,7 +97,7 @@ module.exports = function(P) {
 				 * use when you load the MongoDB lib.
 				 */
 				mongo: {
-					host: 			"127.0.0.1",
+					host: 			"54.225.79.57",
 					port: 			"default",
 					username:		"",
 					password: 		"",
