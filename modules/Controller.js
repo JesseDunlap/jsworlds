@@ -21,6 +21,7 @@ exports.module = function(P) {
 	controllerFiles.forEach(function(file) {
 		var controllerName	=	file.replace(".js", "");
 		var controller		=	require("../app/controllers/" + file);
+		if (controller == undefined) break;
 		var instance		=	new controller(P);
 		
 		_controllers[controllerName] = [];
