@@ -37,7 +37,7 @@ var ChatController = function(P) {
 	this.getMessage = function(data) {
 		switch(data.type) {
 			// Public Message
-			case 1:
+			case MessageType.PUBLIC:
 				P.$("#messages").prepend(P.snippet("chat/message", {
 					color: 		"#FFF",
 					sender: 	data.sender,
@@ -47,7 +47,7 @@ var ChatController = function(P) {
 				break;
 			
 			// Private Message
-			case 2:
+			case MessageType.PRIVATE:
 				P.$("#messages").prepend(P.snippet("chat/private_message", {
 					color: 		"#09F",
 					sender: 	data.sender,
@@ -57,7 +57,7 @@ var ChatController = function(P) {
 				break;
 				
 			// System Message
-			case 3:
+			case MessageType.SYSTEM:
 				P.$("#messages").prepend(P.snippet("chat/message", {
 					color: 		"#F00",
 					sender: 	data.sender || "System",
@@ -67,7 +67,7 @@ var ChatController = function(P) {
 				break;
 			
 			// Emote Message
-			case 4:
+			case MessageType.EMOTE:
 				P.$("#messages").prepend(P.snippet("chat/emote_message", {
 					color: 		"#FFF",
 					sender: 	data.sender,
