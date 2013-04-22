@@ -10,7 +10,7 @@ module.exports = function(P) {
 	/**
 	 * Adds an event listener, corresponding to a string event, with a callback.
 	 *
-	 * @param		string e 				The name of the event you want to listen for.
+	 * @param		string e 			The name of the event you want to listen for.
 	 * @param 		function callback 		The callback function which will be triggered.
 	 */
 	global.on = function(e, callback) {
