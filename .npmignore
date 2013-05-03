@@ -1,3 +1,4 @@
-node_modules/
-.idea/
-app/data/*.session.*
+.git/
+changelog.txt
+docs/
+README.md

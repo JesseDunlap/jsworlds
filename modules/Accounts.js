@@ -3,17 +3,14 @@
  * Provides an abstraction for user account creation, authentication, and modification
  */
 
-exports.autoload = false;
-
-exports.module = function(P) {
-    var $this = this;
-
-	P.depends(["Session"]);
+var AccountsModule = function(P) {
+	var $this = this;
+	
+	P.dependOn(["Session"]);
 	
 	P.accounts = {
 		getSkeleton: function() {
 			return {
-				username: 		"",
 				password: 		"",
 				firstName: 		"",
 				lastName: 		"",
@@ -28,38 +25,69 @@ exports.module = function(P) {
 		},
 		
 		init: function(callback) {
-			if (P.accountDb === undefined)				
-				P.accountDb = P.lib("p/mongo").connect(["accounts"]);
-			
-			if (P.session("accountLogin") === undefined || P.session("accountLogin") === "null") {
-				P.account = this.getSkeleton();
-				callback();
-			}
-			
-			else {
-				P.accountDb.accounts.find({ 
-					_id: 	require("mongojs")({}).ObjectId(P.session("accountLogin"))
-				},
-			
-				function(error, results) {
-					if (error) {
-						P.log.error("Error when communicating with the Account Database.");
-						return
-					}
+			P.session("accountLogin", function(accountLogin) {
 				
-					if (results.length > 0) {
-						P.account = results[0];
-						callback();
-						return;
-					}
-				
-					/** 
-					 * Skeleton Account
-					 */
-					P.account = {};
+				if (P.accountDb === undefined)				
+					P.accountDb = P.lib("hydrais/p/mongo").connect(["accounts"]);
+			
+				if (accountLogin === undefined || accountLogin === "null") {
+					P.account = P.accounts.getSkeleton();
 					callback();
-				});
-			}
+				}
+			
+				else {
+					try {
+						P.accountDb.accounts.find({ 
+							_id: 	P.accountDb.ObjectId(accountLogin) 
+						},
+				
+						function(error, results) {
+							if (error) {
+								console.error("Error when communicating with the Account Database.");
+								return;
+							}
+					
+							if (results.length > 0) {
+								delete results[0].password;
+								delete results[0].salt;
+								P.account = results[0];
+								callback();
+								return;
+							}
+					
+							/** 
+							 * Skeleton Account
+							 */
+							P.account = P.accounts.getSkeleton();
+							callback();
+						});
+					}
+				
+					catch (e) {
+						throw e;
+					}
+				}
+			});
+		},
+		
+		hasPermission: function(permission) {
+			if (P.account === undefined) return;
+			P.account.permissions = P.account.permissions || [];
+			return (P.account.permissions.indexOf(permission) != -1);
+		},
+		
+		grant: function(permission, callback) {
+			if (P.account === undefined) return;
+			P.account.permissions = P.account.permissions || [];
+			P.account.permissions.push(permission);
+			P.accounts.update(callback);
+		},
+		
+		redact: function(permission, callback) {
+			if (P.account === undefined) return;
+			P.account.permissions = P.account.permissions || [];
+			P.account.permissions.splice(P.account.permissions.indexOf(permission), 1);
+			P.accounts.update(callback);
 		},
 		
 		grav: function(email) {
@@ -69,107 +97,81 @@ exports.module = function(P) {
 		
 		getGravatar: function() {
 			if (P.account === undefined) return;
-			return this.grav(P.account.email);
+			return $this.grav(P.account.email);
 		},
 	
 		update: function(callback) {
 			if (P.account === undefined) {
-				P.log.error("P.account is undefined, update cannot continue.");
+				console.error("P.account is undefined, update cannot continue.");
 				return;
 			}
 			
 			P.accountDb.accounts.save(P.account, callback);
 		},
 	
-		register: function(callback) {
-			if (P.account === undefined) {
-				P.log.error("P.account is undefined, registration cannot continue.");
-				return;
-			}
-			
-			P.account.password = require('sha1')(P.account.password);
-			
-			P.accountDb.accounts.save(P.account, callback);
+		register: function(accountData, callback) {
+			require("bcrypt-nodejs").genSalt(global.config.accounts.saltRounds || 10, function(err, result) {
+				accountData.salt = result;
+				accountData.password = require("bcrypt-nodejs").hashSync(accountData.password, accountData.salt);
+				accountData.permissions = accountData.permissions || [];
+				
+				// Add the default permissions from the configuration file
+				global.config.accounts.defaultPermissions.forEach(function(perm) {
+					accountData.permissions.push(perm);
+				});
+				
+				P.accountDb.accounts.save(accountData, callback);
+			});
 		},
 		
 		logout: function() {
 			P.session("accountLogin", "null");
-			P.account = this.getSkeleton();
+			P.account = P.accounts.getSkeleton();
 		},
 		
-		login: function(username, password, callback) {
-			password = require("sha1")(password);
-			
+		login: function(email, password, callback) {
 			/**
-			 * Check if username and password match an account
+			 * Fetch the SALT from the database
 			 */
 			P.accountDb.accounts.find({
-				username: 		username,
-				password: 		password
+				email: 		email
 			},
 			
 			function(error, results) {
-				if (error) {
-					/**
-					 * an error occured, do not continue
-					 */
+				if (error || results.length == 0) {
 					callback(false, error, results);
 					return;
 				}
 				
-				if (results.length > 0) {
+				var salt = results[0].salt;
+				password = require("bcrypt-nodejs").hashSync(password, salt);
+			
+				if (results[0].password === password && results[0].email === email) {
 					/**
 					 * there was a matched account, send a true response
 					 * and preserve the account ID in a session
 					 */
+					delete results[0].password;
+					delete results[0].salt;
 					P.account = results[0];
 					callback(true, error, results);
+					
 					P.session("accountLogin", results[0]._id);
 				}
 				
 				else {
-					/**
-					 * the username and password didn't match, let's check 
-					 * if the e-mail matches.
-					 */
-					P.accountDb.accounts.find({
-						email: 		username,
-						password: 	password
-					},
-					
-					function(error1, results1) {
-						if (error1) {
-							/**
-							 * an error occured, do not continue
-							 */
-							callback(false, error1, results1);
-							return;
-						}
-						
-						if (results1.length > 0) {
-							/**
-							 * there was a matched account, send a true response
-							 * and preserve the account ID in a session
-							 */
-							P.account = results1[0];
-							callback(true, error1, results1);
-							P.session("accountLogin", results1[0]._id);
-						}
-						
-						else {
-							/**
-							 * okay, there's really no match, they're just not
-							 * correct about their login, send a false response
-							 */
-							callback(false, error1, results1);
-						}
-					});
+					callback(false, error, results);
 				}
-			})
+			});
 		}
 	};
 	
-	P.socket.on("disconnect", function(data) {
-		if (P.accoutDb && P.accountDb.close) P.accountDb.close();
-	});
+	if (P.socket) {
+		P.socket.on("disconnect", function(data) {
+			if (P.accoutDb && P.accountDb.close) P.accountDb.close();
+		});
+	}
 };
+
+module.exports = AccountsModule;
+module.exports.autoload = false;

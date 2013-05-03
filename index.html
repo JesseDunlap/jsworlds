@@ -6,11 +6,11 @@
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 	<head>
+		<!-- Modernizr -->
+		<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+		
         <!-- jQuery -->
-        <link rel="stylesheet" type="text/css" href="lib/p-client/jquery.ui.css" />
-        <link rel="stylesheet" type="text/css" href="lib/p-client/smoothness/jquery-ui-1.9.2.custom.min.css" />
-        <script src="lib/p-client/jquery.min.js"></script>
-        <script src="lib/p-client/jquery.ui.min.js"></script>
+		<script src="http://code.jquery.com/jquery.js"></script>
 
         <meta charset="utf-8" />
 
@@ -19,46 +19,32 @@
 
 	  	<title>P Framework</title>
   
-		<!-- FOUNDATION -->
-		
 	  	<!-- Included CSS Files (Compressed) -->
-	  	<link rel="stylesheet" href="app/public/css/foundation.min.css">
-	  	<link rel="stylesheet" href="app/public/css/app.css">
-	  	<link rel="stylesheet" href="app/public/css/font-awesome.min.css">
-
-	  	<!--script src="app/public/js/modernizr.foundation.js"></script>-->
-
-	  	<!-- IE Fix for HTML5 Tags -->
+		<link rel="stylesheet" href="app/public/css/bootstrap.css">
+	  	<link rel="stylesheet" href="app/public/css/flat-ui.css">
+	  	<link rel="stylesheet" href="app/public/css/style.css">
+	
+		<!-- IE Fix for HTML5 Tags -->
 	  	<!--[if lt IE 9]>
 	    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	  	<![endif]-->
-	
-		<!-- END FOUNDATION -->
-
-		<!-- P -->
-		<script type="text/javascript" src="lib/p-client/socket.io.min.js"></script>
-		<script type="text/javascript" src="lib/p-client/main.js"></script>
-
-
-		<script src="app/public/js/foundation.min.js"></script>
-		<script src="app/public/js/app.js"></script>
-	
-		<script type="text/javascript" charset="utf-8">
-			window.onload = function() {
-				$.get("config/global/client.json", function(data) {
-					p = new P($('#container'), 'p');
-					p.connect({ host: data.host, port: data.port });
-				});
-			};
-		</script>
 	</head>
 	
 	<body>
-		<div id="p" style="z-index:999; position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; background-color: #fff; text-align: center; margin-top: 300px;">
-			<img src="lib/p-client/loading.gif" alt="Please wait..." />
-			<h1 style="font-family: helvetica, arial; font-weight: bold; text-transform: uppercase; font-size: 11px" id="message"></h1>
-		</div>
-		
-		<div id="container"></div>
 	</body>
+	
+	<!-- Included JS Files -->
+
+	<!-- P -->
+	<script type="text/javascript" src="lib/hydrais/p/client/socket.io.min.js"></script>
+	<script type="text/javascript" src="lib/hydrais/p/client/main.js"></script>	
+
+	<script type="text/javascript" charset="utf-8">
+		window.onload = function() {
+			$.get("config/global/client.json", function(data) {
+				window.P = new PClient();
+				window.P.connect({ host: data.host, port: data.port });
+			});
+		};
+	</script>
 </html>

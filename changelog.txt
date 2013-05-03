@@ -1,9 +1,0 @@
-1.1
-===
-
-* Added Platform
-* Added P.alert, P.closeWindow, and P.eval
-* Controller reloading is now automatic
-* Fixed an issue which would cause browser freezes because of reconnection spamming attempts.
-* Improved Controller loading. Absolute paths to outside controllers can now be used, similar to views.
-* Added P.script, which can be used in views, similar to how P.snippet is used for script loading

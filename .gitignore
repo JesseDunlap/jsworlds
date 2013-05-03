@@ -1,2 +1,3 @@
-app/data/
 node_modules/
+.idea/
+app/data/*.session.*

@@ -1,55 +1,51 @@
 {
-  "name": "p-framework",
-  "version": "1.1.0b",
-  "author": {
-    "name": "Jesse Dunlap",
-    "email": "jesse.dunlap@hydrais.com"
-  },
-  "preferGlobal": true,
-  "bin": {
-    "p": "./bin/p"
-  },
-  "description": "A socket based, real time web framework.",
-  "contributors": [],
-  "scripts": {
-    "start": "node app.js",
-    "develop": "nodemon app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://jessedunlap@bitbucket.org/hydrais/p-framework.git"
-  },
-  "keywords": [
-    "p",
-    "framework",
-    "web",
-    "socket",
-    "socket.io",
-    "real",
-    "time"
-  ],
-  "dependencies": {
-    "connect": "*",
-    "ejs": "*",
-    "MD5": "*",
-    "mongojs": "*",
-    "node-uuid": "*",
-    "sha1": "*",
-    "socket.io": "*",
-    "wrench": "*",
-    "mustache": "*",
-    "jade": "*",
-    "email": "*",
-    "node-use": "*",
-    "nodemailer": "*",
-    "ftp": "*"
-  },
-  "license": "MIT",
-  "engines": {
-    "node": ">=0.6"
-  },
-  "readme": "# About P #\n\nThe P Framework is a real time web framework written in Node.js. It utilizes modern HTML5 technology, including **Sockets**\nto provide a fast, sleek web app experience. For more information, please visit [p.jessedunlap.me](http://p.jessedunlap.me).\n\n# Documentation #\n\nP has been documented at [http://p.jessedunlap.me/docs](http://p.jessedunlap.me/docs/). Documentation is still\na work in progress, but this is the best place to start if you want to learn about P.\n\n# Installing P #\n\nYou can download the latest copy of P from [p.jessedunlap.me](http://p.jessedunlap.me/) or you can use **NPM**:\n\n```\n#!shell\nsudo npm install -g p-framework\n```\n\nAfter installing P with NPM, you can set up a blank slate by running:\n\n```\n#!shell\np engage /path/to/your/project\n```\n\n# Developers #\n\n* Jesse Dunlap <[jesse.dunlap@hydrais.com](mailto:jesse.dunlap@hydrais.com)> - **Project Lead/Main Developer**\n\n# Acknowledgements #\n\nSpecial thanks goes out to these developers for making P possible. You guys are awesome!\n\n* **Sencha Labs** - Connect Server - [https://github.com/senchalabs/connect](https://github.com/senchalabs/connect)\n* **VisionMedia** - EJS - [https://github.com/visionmedia/ejs](https://github.com/visionmedia/ejs)\n* **VisionMedia** - Jade - [https://github.com/visionmedia/jade](https://github.com/visionmedia/jade)\n* **aheckmann** - node-email - [https://github.com/aheckmann/node-email](https://github.com/aheckmann/node-email)\n* **pvorb** - node-md5 - [https://github.com/pvorb/node-md5/](https://github.com/pvorb/node-md5/)\n* **pvorb** - sha1 - [https://github.com/pvorb/node-sha1/](https://github.com/pvorb/node-sha1/)\n* **gett** - mongojs - [https://github.com/gett/mongojs](https://github.com/gett/mongojs)\n* **janl** - mustache.js - [https://github.com/janl/mustache.js](https://github.com/janl/mustache.js)\n* **broofa** - node-uuid - [https://github.com/broofa/node-uuid](https://github.com/broofa/node-uuid)\n* **LearnBoost** - socket.io - [https://github.com/LearnBoost/socket.io](https://github.com/LearnBoost/socket.io)\n* **ryanmcgrath** - wrench-js - [https://github.com/ryanmcgrath/wrench-js](https://github.com/ryanmcgrath/wrench-js)\n\n# License #\n\nP is released under the **MIT License**. For more information, **please see LICENSE.md**",
-  "readmeFilename": "README.md",
-  "_id": "p-framework@1.1.0b",
-  "_from": "p-framework@"
+	"name": 		"p-framework",
+	"version": 		"1.1.0b",
+	"author": 		"Jesse Dunlap <jesse.dunlap@hydrais.com>",
+	"preferGlobal":	true,
+	
+	"bin": 			{ "p": "./bin/p" },
+	
+	"main": 		"index.js",
+	
+	"description": 	"A socket based, real time web framework.",
+	
+	"contributors": [],
+	
+	"scripts": 		{
+						"start": 		"node app.js",
+						"test": 		"nodeunit test"
+					},
+	
+	"repository": 	{ "type": "git", "url": "https://jessedunlap@bitbucket.org/hydrais/p-framework.git" },
+	
+	"keywords": 	["p", "framework", "web", "socket", "socket.io", "real", "time"],
+	
+	"dependencies": {
+						"connect":			"*",
+						"ejs": 				"*",
+						"MD5":				"*",
+						"mongojs":			"*",
+						"node-uuid":		"*",
+						"sha1":				"*",
+						"socket.io":		"*",
+						"wrench":			"*",
+						"mustache": 		"*",
+						"jade": 			"*",
+						"email":			"*",
+						"node-use":			"*",
+						"ftp":				"*",
+						"gm": 				"*",
+						"adm-zip": 			"*",
+						"socket.io-client": "*",
+						"coffee-script": 	"*",
+						"watchvar":			"*",
+						"redis": 			"*",
+						"bcrypt-nodejs": 	"*",
+						"ice-framework":	"*"
+					},
+					
+	"license": 		"MIT",
+	
+	"engines": 		{ "node": ">=0.8" }
 }

@@ -1,9 +1,23 @@
-exports.module = function(P) {
-	P.globe = require('../lib/p/global');
-	
+var HelpersModule = function(P) {
 	P.title = function(title) {
 		P.emit("setTitle", title);
 	};	
+	
+	P.hash = function(hash) {
+		if (P.socket) P.socket.emit("hashchange", hash);
+	};
+	
+	P.autorouteHash = function(data) {
+		if (data.controller && data.action) {
+			try {
+				P.controller(data.controller)[data.action](data.params);
+			}
+			
+			catch (e) {
+				
+			}
+		}
+	};
 	
 	P.lib = function(lib) {
 		var lib = require('../lib/' + lib);
@@ -34,3 +48,6 @@ exports.module = function(P) {
 		return require('../lib/' + lib.replace(/\./g, "/"));
 	};
 };
+
+
+module.exports = HelpersModule;

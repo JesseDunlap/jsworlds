@@ -3,7 +3,7 @@
  * Implements the Element funcitonality of P
  */
 
-var jw = require('../lib/p/watch');
+var jw = require('../lib/hydrais/p/watch.old.js');
 
 var Element = function(selector, P) {
 	this.content 			=	"";
@@ -18,14 +18,12 @@ var Element = function(selector, P) {
 		if (e === "attributes")
 			$this.attr($this.attributes);
 	});
-
-	P.depends(["View"]);
 	
 	var $this		=	this;
 	$this.selector	=	selector;
 	
 	$this.jq = function(method, data) {
-		P.emit("jq", {
+		P.socket.emit("jq", {
 			type: 		"call",
 			selector: 	$this.selector,
 			method: 	method,
@@ -352,15 +350,25 @@ var Element = function(selector, P) {
 		
 		return $this;
 	};
+	
+	this.bind = function(view_name, options)
+	{
+		options.change(function(data) {
+			$this.render(view_name, options);
+		});
+		
+		$this.render(view_name, options);
+	};
 };
 
 
-exports.module = function(P) {
-	P.element = function(selector) {
+var ElementModule = function(P) {
+	P.dependOn("View");
+	
+	P.$ = function(selector) {
 		return new Element(selector, P);
 	};
-	
-	P.$ = P.element;
 };
 
-exports.Element = Element;
+module.exports = ElementModule;
+module.exports.Element = Element;

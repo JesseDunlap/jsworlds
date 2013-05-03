@@ -24,18 +24,18 @@ module.exports = function(P) {
 	};
 	
 	this.getMap = function(mapID) {
-		P.globe.maps[mapID] = P.globe.maps[mapID] || Map.generateNewMap(mapID);
-		P.globe.maps[mapID].off("changed-tile", $this.tileChanged);
-		P.globe.maps[mapID].on("changed-tile", $this.tileChanged);
+		global.maps[mapID] = global.maps[mapID] || Map.generateNewMap(mapID);
+		global.maps[mapID].off("changed-tile", $this.tileChanged);
+		global.maps[mapID].on("changed-tile", $this.tileChanged);
 		
 		return require("superserialize").serialize({
 			id: 			mapID,
-            name:           P.globe.maps[mapID].name,
-            alignment:      P.globe.maps[mapID].alignment,
-            description:    P.globe.maps[mapID].description,
-			tiles: 			P.globe.maps[mapID].tiles,
-			music:  	 	P.globe.maps[mapID].music,
-			startLocation: 	P.globe.maps[mapID].startLocation,
+            name:           global.maps[mapID].name,
+            alignment:      global.maps[mapID].alignment,
+            description:    global.maps[mapID].description,
+			tiles: 			global.maps[mapID].tiles,
+			music:  	 	global.maps[mapID].music,
+			startLocation: 	global.maps[mapID].startLocation,
 			
 			getTile: function(layer, x, y) {
 				return this.tiles[layer][x][y];
@@ -50,17 +50,17 @@ module.exports = function(P) {
 		var layer = data.layer;
 		var tile  = data.tile;
 
-		P.globe.maps[mapID].setTile(x, y, layer, tile);
+		global.maps[mapID].setTile(x, y, layer, tile);
 	}
 
 	this.loadMaps = function(callback) {
-		P.globe.maps = P.globe.maps || [];
+		global.maps = global.maps || [];
 
 		P.db.maps.find({}, function(error, maps) {
 			maps.forEach(function(m) {
 				var map = new Map();
 				map.fromJSON(m);
-				P.globe.maps[map.id] = map;
+				global.maps[map.id] = map;
 
 				map.on("changed-tile", $this.tileChanged);
 			});
@@ -70,8 +70,8 @@ module.exports = function(P) {
 	};
 
 	this.saveMaps = function() {
-		for (var id in P.globe.maps) {
-			var map = P.globe.maps[id];
+		for (var id in global.maps) {
+			var map = global.maps[id];
 			P.db.maps.save(map);
 		}
 	};
@@ -81,7 +81,7 @@ module.exports = function(P) {
 
         for (var key in mapData) {
             if (key !== 'id')
-                P.globe.maps[id][key] = mapData[key];
+                global.maps[id][key] = mapData[key];
         }
 
         P.clients.forEach(function(client) {

@@ -51,11 +51,11 @@ module.exports = function(P) {
 	 * WARNING: You must trigger callback otherwise the app won't load.
 	 */
 	this.onLoad = function(callback) {
-		P.db = P.lib("p/mongo").connect(["maps"]);		
-		P.depends(["Accounts"]);
-
+		P.db = P.lib("hydrais/p/mongo").connect(["maps"]);		
+		P.dependOn(["Accounts"]);
+		
 		P.accounts.init(function() {
-			if (P.globe.maps === undefined || P.globe.maps === {}) {
+			if (global.maps === undefined || global.maps === {}) {
 				P.controller("map").index();
 				P.controller("map").loadMaps(callback);
 			}
