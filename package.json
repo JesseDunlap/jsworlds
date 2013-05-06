@@ -42,7 +42,8 @@
 						"watchvar":			"*",
 						"redis": 			"*",
 						"bcrypt-nodejs": 	"*",
-						"ice-framework":	"*"
+						"ice-framework":	"*",
+						"superserialize":	"*"
 					},
 					
 	"license": 		"MIT",

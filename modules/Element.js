@@ -365,9 +365,11 @@ var Element = function(selector, P) {
 var ElementModule = function(P) {
 	P.dependOn("View");
 	
-	P.$ = function(selector) {
+	P.element = function(selector) {
 		return new Element(selector, P);
 	};
+
+	P.$ = P.element;
 };
 
 module.exports = ElementModule;

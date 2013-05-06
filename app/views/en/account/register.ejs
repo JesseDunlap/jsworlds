@@ -1,34 +1,30 @@
 <% include ../layout/header %>
 
-<div class="row">
-	<div class="four columns centered">
-		<h4>New Account</h4>
+<div class="container">
+	<div class="row">
+		<div class="span12">
+			<h4>New Account</h4>
 		
-		<div class="alert-box alert" style="display: none;" id="loginError"></div>
-		
-		<form p:action="account.register">
-			<p>
-				<input type="text" name="firstName" placeholder="First Name" />
-				<input type="text" name="lastName" placeholder="Last Name" />
-			</p>
+			<div class="alert-box alert" style="display: none;" id="loginError"></div>
 			
-			<p>
-				<input type="text" name="username" placeholder="Username" />
-			</p>
-			
-			<p>
-				<input type="text" name="username" placeholder="Email" />
-			</p>
-			
-			<p>
-				<input type="password" name="password" placeholder="Password" />
-			</p>
-			
-			<p>
-				<input type="submit" class="full-width button" value="Create Account" />
-			</p>
-		</form>
+			<form p:action="account.register">
+				<p>
+					<input type="text" name="firstName" placeholder="First Name" />
+					<input type="text" name="lastName" placeholder="Last Name" />
+				</p>
+				
+				<p>
+					<input type="text" name="email" placeholder="Email Address" />
+				</p>
+				
+				<p>
+					<input type="password" name="password" placeholder="Password" />
+				</p>
+				
+				<p>
+					<input type="submit" class="btn btn-primary" value="Create Account" /> or <a href="#" p:link="account.login">Login</a>
+				</p>
+			</form>
+		</div>
 	</div>
 </div>
-
-<% include ../layout/footer %>

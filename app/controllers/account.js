@@ -18,26 +18,26 @@ module.exports = function(P) {
 	 *
 	 * @param loginData Form submitted login data.
 	 */
-	this.login = function(loginData) {
-		if (loginData === undefined) {
+	this.login = function(data) {
+		if (data === undefined) {
 			P.$('body').render("account/login");
 		}
 		
 		else {
 			// Check that the login data has been submitted and validates. If not,
 			// show an error message and prevent further execution.
-			if (loginData.username === undefined || loginData.password === undefined || loginData.username.length === 0 || loginData.password.length === 0) {
-				P.$('#loginError').html(P.string("invalid_login")).show();
+			if (data.email === undefined || data.password === undefined) {
+				P.$('#loginError').html("Invalid email address or password.").show();
 				return;
 			}
 			
-			P.accounts.login(loginData.username, loginData.password, function(loggedIn) {
-				if (loggedIn) {
+			P.accounts.login(data.email, data.password, function(success) {
+				if (success) {
 					P.controller("index").index();
 				}
-				
+
 				else {
-					P.$('#loginError').html(P.string("invalid_login")).show();
+					P.$("#loginError").html("Invalid email address or password.").show();
 				}
 			});
 		}
@@ -56,10 +56,9 @@ module.exports = function(P) {
 		}
 		
 		else {
-			P.account = account;
-		
-			P.accounts.register();
-			P.controller("account").login();
+			P.accounts.register(account, function() {
+				P.controller("account").login();
+			});
 		}
 	};
 };

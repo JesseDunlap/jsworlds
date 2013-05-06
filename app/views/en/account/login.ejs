@@ -1,29 +1,25 @@
 <% include ../layout/header %>
 
-<div class="row">
-	<div class="four columns centered">
-		<h4>Login</h4>
-		
-		<div class="alert-box alert" style="display: none;" id="loginError"></div>
-		
-		<form p:action="account.login">
-			<p>
-				<input type="text" name="username" placeholder="Username or Email" />
-			</p>
+<div class="container">
+	<div class="row">
+		<div class="span12">
+			<h4>Login</h4>
 			
-			<p>
-				<input type="password" name="password" placeholder="Password" />
-			</p>
+			<div class="alert-box alert" style="display: none;" id="loginError"></div>
 			
-			<p>
-				<input type="submit" class="full-width button" value="Login" />
-			</p>
-		</form>
-		
-		<p>
-			<a p:link="account.register">Create a new account</a>
-		</p>
+			<form p:action="account.login">
+				<p>
+					<input type="text" name="email" placeholder="Email" />
+				</p>
+				
+				<p>
+					<input type="password" name="password" placeholder="Password" />
+				</p>
+				
+				<p>
+					<input type="submit" class="btn btn-primary" value="Login" /> or <a p:link="account.register">Create a new account</a>
+				</p>
+			</form>
+		</div>
 	</div>
 </div>
-
-<% include ../layout/footer %>

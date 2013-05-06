@@ -69,10 +69,12 @@ module.exports = function(P) {
 		});
 	};
 
-	this.saveMaps = function() {
+	this.saveMaps = function(callback) {
+		callback = callback || function(){};
+		
 		for (var id in global.maps) {
 			var map = global.maps[id];
-			P.db.maps.save(map);
+			P.db.maps.save(map, callback);
 		}
 	};
 
