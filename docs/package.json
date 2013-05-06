@@ -1,0 +1,14 @@
+{
+  "name":         "milo",
+  "version":      "0.0.0",
+  "description":  "An easy to use Markdown site/documentation generator.",
+  
+  "main":         "index.js",
+
+  "repository":   "http://github.com/hydrais/milo/",
+  "author":       "Hydrais <milo@hydrais.com>",
+
+  "license":      "MIT",
+
+  "dependencies": ["wrench", "node-markdown", "ejs", "connect"]
+}

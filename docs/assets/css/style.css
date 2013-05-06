@@ -1,0 +1,102 @@
+@import url(http://fonts.googleapis.com/css?family=Inconsolata:400,700);
+
+/*
+We highly recommend you use SASS and write your custom styles in sass/_custom.scss.
+However, this blank file is available if you prefer
+*/
+
+h3
+{
+	border-bottom: 1px solid #ccc;
+	line-height: 30px;
+	margin-bottom: 10px;
+}
+
+.logo
+{
+	font-size: 20px !IMPORTANT;
+	color: #fff;
+	font-weight: 400;
+	margin-left: 20px !IMPORTANT;
+	margin-top: 5px !IMPORTANT;
+	margin-bottom: -5px;
+	text-shadow: 0px 1px 5px #000;
+}
+
+.description
+{
+	font-size: 13px !IMPORTANT;
+	padding: 40px;
+	position: fixed;
+	top: 60px;
+	left: 0px;
+	bottom: 0px;
+	width: 700px;
+	overflow-x: auto;
+}
+
+.filebox
+{
+	position: fixed;
+	border-left: 1px solid #ccc;
+	top: 60px;
+	left: 700px;
+	bottom: 0px;
+	right: 0px;
+	background-color: #f5f5ff;
+	overflow-x: auto;
+}
+
+.filebox pre
+{
+	padding: 10px;
+}
+
+#code code
+{
+	border: none !IMPORTANT;
+	background-color: transparent !IMPORTANT;
+}
+
+#code pre
+{
+	border-radius: 0px;
+	border: none;
+	background-color: transparent;
+}
+
+pre code
+{
+	border: none !IMPORTANT;
+	background-color: transparent !IMPORTANT;
+}
+
+pre
+{
+	font-size: 16px;
+	padding: 10px;
+	border-radius: 2px;
+	border: 1px solid #ccc;
+	background-color: #f5f5ff;
+}
+
+code
+{
+	padding: 2px;
+	border-radius: 2px;
+	border: 1px solid #ccc;
+	background-color: #f5f5ff;
+	font-family: 'Inconsolata' !IMPORTANT;
+	padding: 3px;
+}
+
+ul
+{
+	margin-left: 20px;
+	list-style: square;
+}
+
+h1.logo
+{
+	margin-top: 0px !IMPORTANT;
+}
