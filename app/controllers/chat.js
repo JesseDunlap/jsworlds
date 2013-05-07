@@ -7,7 +7,7 @@ var MessageType = {
 
 var ChatController = function(P) {
 	this.sendMessage = function(message) {
-		var sender = P.account.username;
+		var sender = P.account.firstName;
 		
 		P.clients.forEach(function(client) {
 			client.controller("chat").getMessage({
@@ -19,12 +19,12 @@ var ChatController = function(P) {
 	};
 	
 	this.sendPM = function(data) {
-		var sender    = P.account.username;
+		var sender    = P.account.firstName;
 		var recipient = data.recipient;
 		var message   = data.message;
 		
 		P.clients.forEach(function(client) {
-			if (client.account.username == recipient) {
+			if (client.account.firstName == recipient) {
 				client.controller("chat").getMessage({
 					type: 		MessageType.PRIVATE,
 					sender: 	sender,
@@ -81,3 +81,5 @@ var ChatController = function(P) {
 		};
 	};
 };
+
+module.exports = ChatController;

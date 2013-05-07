@@ -1,6 +1,7 @@
 module.exports = function(P) {
     this.setLocation = function(data) {
-        data.username = P.account.username;
+        data.email = P.account.email;
+        data.name = P.account.firstName;
 
         P.clients.forEach(function(client) {
             if (client != P)

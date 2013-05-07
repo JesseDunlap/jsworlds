@@ -45,22 +45,41 @@
 
     P.socket.on("player-changed-pos", function(data) {
         window.players = window.players || {};
+        window.playerNames = window.playerNames || {};
+
         if (data.map != window.currentMap.id) return;
 
-        if (window.players[data.username] === undefined) {
-            window.players[data.username] = Crafty.e("2D, Canvas, Player, Fourway, Tween, playerSprite0")
+        if (window.players[data.email] === undefined) {
+        	window.playerNames[data.email] = Crafty.e("Text, 2D, Canvas, Player, Fourway, Tween")
+
+        	.attr({
+        		x: data.x,
+                y: data.y - 45,
+                z: 5,
+                w: 32,
+                h: 32
+        	})
+
+        	.text(data.name)
+
+        	.textFont({ size: '30px', weight: 'bold' });
+
+
+        	
+            window.players[data.email] = Crafty.e("2D, Canvas, Player, Fourway, Tween, playerSprite0")
 
             .attr({
                 x: data.x,
                 y: data.y,
-                z: 5,
+                z: 7,
                 w: 32,
                 h: 32
-            })
+            });
         }
 
         else {
-            window.players[data.username].tween({ x: data.x, y: data.y }, 5);
+            window.players[data.email].tween({ x: data.x, y: data.y }, 5);
+            window.playerNames[data.email].tween({ x: data.x, y: data.y - 45 }, 5);
         }
     });
 
@@ -81,6 +100,16 @@
                 $('#title').animate({ 'color': 'red' });
 
             $('#description').val(map.description);
+            $('#mapMusic').val(map.music);
+            $('#mapName').val(map.name);
+
+            Crafty.audio.pause("background");
+            
+            Crafty.audio.add({
+            	"background": [map.music]
+            });
+
+            Crafty.audio.play("background", -1);
 
             window.currentMap.name = map.name;
             window.currentMap.alignment = map.alignment;
@@ -192,6 +221,7 @@
 			Crafty.background("#000");
 			
 			var renderMap = function(map) {
+				Crafty.audio.pause("background");
 
 			    $('#mapName').val(map.name);
 			    $('#mapAlignment').val(map.alignment);
@@ -199,6 +229,12 @@
 
 			    $('#title').html(map.name || "");
 			    $('#description').val(map.description || "");
+
+			    Crafty.audio.add({
+			    	"background": [map.music]
+			    });
+
+			    Crafty.audio.play("background", -1);
 
 			    if (map.alignment == "Peaceful")
                     $('#title').animate({ 'color': '#fff' });
@@ -262,7 +298,8 @@
 					for (var layer in window.tiles) {
 						for (var x = 0; x < window.tiles[layer].length; x++) {
 							for (var y = 0; y < window.tiles[layer][x].length; y++) {
-								window.tiles[layer][x][y].destroy();
+								if (window.tiles[layer] && window.tiles[layer][x] && window.tiles[layer][x][y])
+									window.tiles[layer][x][y].destroy();
 							}
 						}
 					}
@@ -272,6 +309,18 @@
 					renderMap(window.currentMap);
 
                     if (window.player === undefined) {
+                    	window.playerText = Crafty.e("2D, Canvas, Player, Fourway, Text, Tween")
+
+                    	.attr({
+                            x: window.currentMap.startLocation.x,
+                            y: window.currentMap.startLocation.y - 45,
+                            z: 7,
+                            w: 32,
+                            h: 32
+                        })
+
+                        .text("You");
+
                         window.player = Crafty.e("2D, Canvas, Player, Fourway, playerSprite0")
 
                         .attr({
@@ -287,6 +336,11 @@
                                 map: window.currentMap.id,
                                 x: e.x,
                                 y: e.y
+                            });
+
+                            window.playerText.attr({
+                            	x: e.x,
+                            	y: e.y - 45
                             });
                         })
 
