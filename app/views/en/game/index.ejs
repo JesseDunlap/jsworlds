@@ -118,6 +118,26 @@
     });
 
 
+	var fillLayer = function() {
+		var type = window.currentType;
+		var layer = window.currentLayer;
+
+		if (confirm("Are you sure that you want to fill layer #" + layer + " with sprite #" + type + "?")) {
+			for (var x = 0; x < 20; x++) {
+				for (var y = 0; y < 15; y++) {
+					P.controller("map").setTile({
+						x: 		x,
+						y: 		y,
+						layer: 	layer,
+						tile: 	type,
+						map: 	window.currentMap.id
+					});
+				}
+			}
+		}
+	};
+
+
 	var createTile = function(x, y, layer, tile) {
 		var e = Crafty.e("2D, Canvas, Mouse, sprite" + tile[0])
 
@@ -214,8 +234,8 @@
 
 			Crafty.sprite(32, "app/public/assets/sprites/default.png", object);
 
-			Crafty.sprite(32, "app/public/assets/sprites/sprites/3.bmp", {
-				playerSprite0: [0, 0]
+			Crafty.sprite(32, "app/public/assets/sprites/characters.png", {
+				playerSprite0: [4, 0]
 			});
 
 			Crafty.background("#000");
