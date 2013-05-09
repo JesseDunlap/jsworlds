@@ -408,6 +408,14 @@
 			window.getMap = function(id) {
 			    window.currentMap = window.currentMap || {};
 
+                if (window.entities) {
+                    for (var selector in window.entities) {
+                        window.entities[selector].destroy();
+                    }
+
+                    window.entities = {};
+                }
+
 				P.controller("map").getMap(id, function(tiles) {
 				    $('#mapID[name="id"]').val(tiles.id);
 

@@ -1,38 +1,42 @@
-var Crafty = function(selector, P, global) {
-	this.global = global || false;
-	this.scripts = [];
-	this.selector = selector;
-	this.P = P;
+var Crafty = function(map, selector, P, global) {
+    this.map            = map;
+    this.selector       = selector;
+    this.P              = P;
+    this.global         = global || false;
+    this.scripts        = [];
 
-	this.create = function() {
-		if (this.global) {
-			P.clients.forEach(function(client) {
-				client.socket.emit("crafty-create", { selector: selector });	
-			});
-		}
+    this.create = function() {
+        var $this = this;
 
-		else {
-			P.socket.emit("crafty-create", { selector: selector });
-		}
+        if (this.global) {
+            P.clients.forEach(function(client) {
+                client.socket.emit("crafty-create", { selector: $this.selector });
+            })
+        }
 
-		this.scripts.forEach(function(script) {
-			if (script.onCreate) script.onCreate();
-		});
+        else {
+            P.socket.emit("crafty-create", { selector: $this.selector });
+        }
 
-		return this;
-	};
+        this.scripts.forEach(function(script) {
+            if (script.onCreate) script.onCreate($this);
+        });
+
+        return this;
+    };
 
 	this.destroy = function() {
+        var $this = this;
+
 		if (this.global) {
 			P.clients.forEach(function(client) {
-				client.socket.emit("crafty-destroy", { selector: selector });
+				client.socket.emit("crafty-destroy", { selector: $this.selector });
 			});
 		}
 
 		else {
-			P.socket.emit("crafty-destroy", { selector: selector });
+			P.socket.emit("crafty-destroy", { selector: $this.selector });
 		}
-		
 
 		this.scripts.forEach(function(script) {
 			if (script.onDestroy) script.onDestroy();
@@ -82,31 +86,60 @@ var Crafty = function(selector, P, global) {
 	};
 
 	this.addScript = function(script) {
-		var s = new script(this);
-		this.scripts.push(s);
-		if (s.onSetup) s.onSetup(this);
+        if (typeof script === 'string') {
+            this.handleScript(require('../app/public/assets/scripts/' + script));
+        }
 
-		return this;
+        else {
+            this.handleScript(script);
+        }
+
+        return this;
 	};
 
+    this.handleScript = function(script) {
+        var instance = new script(this);
+        if (instance.onSetup) instance.onSetup(this);
+
+        this.scripts.push(instance);
+        return this;
+    };
+
 	this.createFor = function(client) {
+        var $this = this;
+
 		client.socket.emit("crafty-create", { selector: this.selector });
 
 		this.scripts.forEach(function(script) {
-			if (script.onSetup) script.onSetup(P.crafty(selector, client));
+			if (script.onSetup) script.onSetup(P.crafty($this.map, $this.selector, client));
 		});
+
+        return this;
 	};
+
+
+
+    this.addComponent = function(component) {
+        return this.call("addComponent", [component]);
+    };
+
+    this.attr = function(attr) {
+        return this.call("attr", [attr]);
+    };
 };
 
 var CraftyModule = function(P) {
-	P.crafty = function(selector) {
-		return new Crafty(selector, P);
+	P.crafty = function(map, selector, client) {
+        client = client || P;
+		return new Crafty(map, selector, client);
 	};
 
-	P.globalCrafty = function(selector) {
+	P.globalCrafty = function(map, selector) {
 		global.entities = global.entities || {};
-		global.entities[selector] = new Crafty(selector, P, true);
-		return global.entities[selector];
+        global.entities[map] = global.entities[map] || {};
+
+		global.entities[map][selector] = new Crafty(map, selector, P, true);
+		return global.entities[map][selector];
 	};
 };
 

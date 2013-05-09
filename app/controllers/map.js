@@ -27,6 +27,13 @@ module.exports = function(P) {
 		global.maps[mapID] = global.maps[mapID] || Map.generateNewMap(mapID);
 		global.maps[mapID].off("changed-tile", $this.tileChanged);
 		global.maps[mapID].on("changed-tile", $this.tileChanged);
+
+        if (global.entities && global.entities[mapID]) {
+            for (var selector in global.entities[mapID]) {
+                var entity = global.entities[mapID][selector];
+                entity.createFor(P);
+            }
+        }
 		
 		return require("superserialize").serialize({
 			id: 			mapID,
@@ -61,6 +68,10 @@ module.exports = function(P) {
 				var map = new Map();
 				map.fromJSON(m);
 				global.maps[map.id] = map;
+
+                if (require("fs").existsSync("app/public/assets/mapscripts/" + map.id + ".js")) {
+                    require("../public/assets/mapscripts/" + map.id + ".js")(map.id, P);
+                }
 
 				map.on("changed-tile", $this.tileChanged);
 			});
