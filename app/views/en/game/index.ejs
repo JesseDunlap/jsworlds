@@ -35,12 +35,111 @@
 <script src="app/public/js/ss.js"></script>
 
 <script type="text/javascript" charset="utf-8">
+
+	var ss_serialize_big = function(object) {
+		for (var key in object) {
+			if (typeof object[key] === 'object' || typeof object[key] === 'function') {
+				delete object[key];
+			}
+		}
+
+		return object;
+	}
+
+	var ss_serialize = function(object) {	
+		var doLevel = function(level) {
+			var json = { _methods: {} };
+
+			for (var key in level) {
+				if (typeof level[key] === 'object') {
+					json[key] = doLevel(level[key]);
+				}
+
+				else if (typeof level[key] === 'function') {
+					json._methods[key]	= level[key].toString();
+					json[key] 			= key;
+				}
+
+				else {
+					json[key]		= level[key];
+				}
+			}
+
+			return json;
+		};
+
+		return doLevel(object);
+	};
+
+
+	var ss_deserialize = function(object) {
+		var doLevel = function(level) {
+			if (level._methods === undefined) level._methods = {};
+
+			var json = {};
+			var methods = [];
+
+			for (var key in level) {
+				if (key !== "_methods") {
+					if (typeof level[key] === 'object') {
+						json[key] = doLevel(level[key]);
+					}
+
+					else if (level._methods[key] !== undefined) {
+						var rnd 	= "f" + Math.floor(Math.random() * 100);
+						eval("methods['" + rnd + "'] = " + level._methods[key]);
+						json[key] 	= methods[rnd];
+						delete methods[rnd];
+					}
+
+					else {
+						json[key] = level[key];
+					}
+				}
+			}
+
+			return json;
+		};
+
+		return doLevel(object);
+	};
+
+
     $('#title').on("hover", function() {
         $(this).hide();
     })
 
     .on("mouseleave", function() {
         $(this).show();
+    });
+
+
+    window.entities = {};
+
+
+    P.socket.on("crafty-create", function(data) {
+    	if (window.entities[data.selector]) return;
+    	window.entities[data.selector] = Crafty.e();
+    });
+
+    P.socket.on("crafty-destroy", function(data) {
+    	if (window.entities[data.selector]) {
+    		window.entities[data.selector].destroy();
+    	}
+    });
+
+    P.socket.on("crafty-call", function(data) {
+    	if (window.entities[data.selector] === undefined) return;
+    	window.entities[data.selector][data.method].apply(window.entities[data.selector], data.params);
+    });
+
+    P.socket.on("crafty-on", function(data) {
+    	if (window.entities[data.selector] === undefined) return;
+
+    	window.entities[data.selector].bind(data.eventName, function(e) {
+    		if (e) P.socket.emit(data.callback, ss_serialize_big(e));
+    		else P.socket.emit(data.callback);
+    	});
     });
 
     P.socket.on("player-changed-pos", function(data) {

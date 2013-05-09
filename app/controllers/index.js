@@ -7,6 +7,12 @@
 module.exports = function(P) {
 	this.index = function() {
 		if (P.accounts.isLoggedIn()) {
+			if (global.entities) {
+				for (var selector in global.entities) {
+					global.entities[selector].createFor(P);
+				}
+			}
+
 			P.controller("game").index();
 			P.controller("map").edit();
 		}
