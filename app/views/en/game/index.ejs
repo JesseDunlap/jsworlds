@@ -353,7 +353,9 @@
 			    	"background": [map.music]
 			    });
 
-			    Crafty.audio.play("background", -1);
+			    if (map.music) {
+			    	Crafty.audio.play("background", -1);
+			    }
 
 			    if (map.alignment == "Peaceful")
                     $('#title').animate({ 'color': '#fff' });
@@ -407,6 +409,11 @@
 		
 			window.getMap = function(id) {
 			    window.currentMap = window.currentMap || {};
+
+			    for (var email in window.players) {
+			    	window.players[email].destroy();
+			    	delete window.players[email];
+			    }
 
                 if (window.entities) {
                     for (var selector in window.entities) {
