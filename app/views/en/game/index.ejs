@@ -26,7 +26,21 @@
 		background-color: #000;
 		overflow: scroll;
 	}
+
+
+	#sendBox {
+		position: fixed;
+		bottom: 120px;
+		left: 0px;
+		width: 500px;
+	}
 </style>
+
+<div id="sendBox">
+	<form p:action="chat.sendMessage">
+		<input type="text" id="messageBox" name="message" placeholder="Send a message..." />
+	</form>
+</div>
 
 <div id="messages"></div>
 <div id="title"></div>
@@ -412,7 +426,9 @@
 
 			    for (var email in window.players) {
 			    	window.players[email].destroy();
+			    	window.playerNames[email].destroy();
 			    	delete window.players[email];
+			    	delete window.playerNames[email];
 			    }
 
                 if (window.entities) {

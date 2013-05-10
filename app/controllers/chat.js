@@ -13,6 +13,18 @@ var ChatController = function(P) {
 			client.controller("chat").getMessage({
 				type: 		MessageType.PUBLIC,
 				sender: 	sender,
+				message:	message.message
+			});	
+		});
+
+		P.$("#messageBox").val("");
+	};
+
+	this.sendServer = function(message) {
+		P.clients.forEach(function(client) {
+			client.controller("chat").getMessage({
+				type: 		MessageType.SERVER,
+				sender: 	sender,
 				message:	message
 			});	
 		});
