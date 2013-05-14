@@ -102,6 +102,19 @@
 	</p>
 
 	<hr />
+
+	<p>
+		<strong>ATTRIBUTE</strong><br />
+		<input class="attributeButton" type="radio" checked name="attribute" value="none"> None<br />
+		<input class="attributeButton" type="radio" name="attribute" value="warp"> Warp<br />
+	</p>
+
+	<p>
+		<strong>ATTRIBUTE DATA</strong><br />
+		<input style="display: none;" type="text" id="attributeData" />
+	</p>
+
+	<hr />
 	
 	<p>
 		<div style="float: left; padding-top: 10px;">
@@ -134,6 +147,26 @@ $('.layerButton').click(function() {
 		$('.customLayer').val(window.currentLayer);
 	}
 });	
+
+$('.attributeButton').click(function() {
+	var value = $(this).val();
+
+	switch (value) {
+		case "none":
+			$('#attributeData').hide();
+			break;
+
+		case "warp":
+			$('#attributeData').show().attr("placeholder", "ID,X,Y").val("");
+			break;
+	};
+
+	window.activeAttribute = value;
+});
+
+$('#attributeData').on("keyup", function() {
+	window.activeAttributeData = $(this).val();
+});
 
 $('.customLayer').on("keyup", function(e) {
 	if (e.which == 13) {
