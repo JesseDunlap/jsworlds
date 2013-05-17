@@ -105,8 +105,9 @@
 
 	<p>
 		<strong>ATTRIBUTE</strong><br />
-		<input class="attributeButton" type="radio" checked name="attribute" value="none"> None<br />
-		<input class="attributeButton" type="radio" name="attribute" value="warp"> Warp<br />
+		<input class="attributeButton" type="radio" checked name="attribute" value="N"> None<br />
+		<input class="attributeButton" type="radio" name="attribute" value="W"> Warp<br />
+		<input class="attributeButton" type="radio" name="attribute" value="B"> Blocked<br />
 	</p>
 
 	<p>
@@ -135,6 +136,34 @@
 
 <script type="text/javascript">
 
+window.showAttributes = function() {
+	window.applyAttribute = true;
+
+	for (var x = 0; x < window.tiles[window.ATTRIBUTE_LAYER].length; x++) {
+		for (var y = 0; y < window.tiles[window.ATTRIBUTE_LAYER][x].length; y++) {
+			var tile = window.tiles[window.ATTRIBUTE_LAYER][x][y];
+
+			tile.attr({
+				z: window.ATTRIBUTE_LAYER
+			});
+		}
+	}
+};
+
+window.hideAttributes = function() {
+	window.applyAttribute = false;
+
+	for (var x = 0; x < window.tiles[window.ATTRIBUTE_LAYER].length; x++) {
+		for (var y = 0; y < window.tiles[window.ATTRIBUTE_LAYER][x].length; y++) {
+			var tile = window.tiles[window.ATTRIBUTE_LAYER][x][y];
+			
+			tile.attr({
+				z: -1
+			});
+		}
+	}
+};
+
 window.gotoMap = function() {
     var id = $('#gotoMapId').val();
     window.getMap(id);
@@ -152,12 +181,19 @@ $('.attributeButton').click(function() {
 	var value = $(this).val();
 
 	switch (value) {
-		case "none":
+		case "N":
+			hideAttributes();
 			$('#attributeData').hide();
 			break;
 
-		case "warp":
+		case "W":
+			showAttributes();
 			$('#attributeData').show().attr("placeholder", "ID,X,Y").val("");
+			break;
+
+		case "B":
+			showAttributes();
+			$('#attributeData').hide();
 			break;
 	};
 

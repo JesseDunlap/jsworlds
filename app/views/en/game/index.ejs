@@ -50,6 +50,9 @@
 
 <script type="text/javascript" charset="utf-8">
 
+	window.ATTRIBUTE_LAYER = 300;
+
+
 	var ss_serialize_big = function(object) {
 		for (var key in object) {
 			if (typeof object[key] === 'object' || typeof object[key] === 'function') {
@@ -269,32 +272,45 @@
 		})
 
 		.bind("MouseDown", function(e) {
+			var blockX = this.attr("blockX");
+			var blockY = this.attr("blockY");
+
 			if (e.mouseButton === 2) {
-				var blockX = this.attr("blockX");
-				var blockY = this.attr("blockY");
 				var layer  = window.currentLayer;
 			}
 			
 			else {
-				var blockX = this.attr("blockX");
-				var blockY = this.attr("blockY");
-				var layer  = window.currentLayer;
-				var type   = window.currentType;
-				
-				this.attr("sprite", type);
 
-				P.controller("map").setTile({
-					x: 		blockX,
-					y: 		blockY,
-					layer: 	layer,
-					tile: 	type,
-					map: 	window.currentMap.id
-				});
+				if (window.applyAttribute) {
+					var tile = window.tiles[window.ATTRIBUTE_LAYER][blockX][blockY];
+					tile.text(window.activeAttribute);
+
+					P.controller("map").setAttribute({
+						x: blockX,
+						y: blockY,
+						attribute: window.activeAttribute
+					});
+				}
+
+				else {
+					var layer  = window.currentLayer;
+					var type   = window.currentType;
+					
+					this.attr("sprite", type);
+
+					P.controller("map").setTile({
+						x: 			blockX,
+						y: 			blockY,
+						layer: 		layer,
+						tile: 		type,
+						map: 		window.currentMap.id
+					});
+				}
 			}
 		})
 		
 		.bind("MouseOver", function(e) {
-			if (window.mouseDown) {
+			if (window.mouseDown && !window.applyAttribute) {
 				var blockX = this.attr("blockX");
 				var blockY = this.attr("blockY");
 				var layer  = window.currentLayer;
@@ -391,9 +407,9 @@
 
 								window.tiles[layer] = window.tiles[layer] || [];
 								window.tiles[layer][x] = window.tiles[layer][x] || [];
-
 								window.tiles[layer][x][y] = e;
 							}
+
 							else {
 								window.tiles[layer] = window.tiles[layer] || [];
 								window.tiles[layer][x] = window.tiles[layer][x] || [];
@@ -401,7 +417,49 @@
 						}
 					}
 				}
+
+				for (var x = 0; x < 20; x++) {
+					for (var y = 0; y < 15; y++) {
+						map.attributes[x] = map.attributes[x] || [];
+						map.attributes[x][y] = map.attributes[x][y] || "N";
+
+						var attributeDescription = Crafty.e("2D, Canvas, Text")
+
+						.attr({
+							x: 		x * 32, 
+							y: 		y * 32,  
+							z: 		window.ATTRIBUTE_LAYER, 
+							
+							w: 		32, 
+							h: 		32,
+							
+							blockX: x,
+							blockY: y,
+
+							attribute: map.attributes[x][y] || "N"
+						})
+
+						.text("   ")
+
+						.textFont({ 'family': 'Lato', 'size': '18px', 'weight': 'bold' });
+
+						window.tiles[window.ATTRIBUTE_LAYER] = window.tiles[window.ATTRIBUTE_LAYER] || [];
+						window.tiles[window.ATTRIBUTE_LAYER][x] = window.tiles[window.ATTRIBUTE_LAYER][x] || [];
+						window.tiles[window.ATTRIBUTE_LAYER][x][y] = attributeDescription;								
+					}
+				}
 			};
+
+			P.socket.on("attribute", function(data) {
+				if (data.map.id + "" === window.currentMap.id + "") {
+					window.tiles[window.ATTRIBUTE_LAYER][x] = window.tiles[window.ATTRIBUTE_LAYER][x] || [];
+					var e = window.tiles[window.ATTRIBUTE_LAYER][x][y] = window.tiles[window.ATTRIBUTE_LAYER][x][y];
+
+					if (e === undefined) {
+						
+					}
+				}
+			});
 
 			P.socket.on("tile", function(data) {
 				if (data.map.id + "" === window.currentMap.id + "") {

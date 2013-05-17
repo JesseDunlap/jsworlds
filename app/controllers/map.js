@@ -19,6 +19,15 @@ module.exports = function(P) {
 		});
 	};
 
+	this.attributeChanged = function(data) {
+        P.socket.emit("attribute", data);
+
+		P.clients.forEach(function(client) {
+            if (client != P)
+			    client.socket.emit("attribute", data);
+		});
+	};
+
 	this.edit = function() {
 		P.view("map/edit");
 	};
@@ -50,6 +59,15 @@ module.exports = function(P) {
 		});
 	};
 
+	this.setAttribute = function(data) {
+		var mapID 		= data.map;
+		var x 			= data.x;
+		var y			= data.y;
+		var attribute 	= data.attribute;
+
+		global.maps[mapID]
+	}
+
 	this.setTile = function(data) {
 		var mapID = data.map;
 		var x     = data.x;
@@ -74,6 +92,7 @@ module.exports = function(P) {
                 }
 
 				map.on("changed-tile", $this.tileChanged);
+				map.on("changed-attribute", $this.attributeChanged);
 			});
 
 			if (callback) callback(maps);
